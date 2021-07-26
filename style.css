@@ -1,10 +1,15 @@
-
-.header{
+.header {
     color: white;
     background: #4b4b4b;
-    padding:20px;
+    padding: 20px;
 }
-.languageForm{
-    padding:10px;
+
+form {
+    padding-top: 10px;
+    margin-left: 10px;
+}
+
+.initInput {
+    margin-left: 10px;
 }
         
