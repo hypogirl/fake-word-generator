@@ -14,11 +14,33 @@ const wordsButton = document.querySelector("#wordsButton");
 var words;
 wordsButton.onclick = (event) => words = document.getElementById("wordsInput").value;
 
-function generateWord(s,w,length,flag){
-    console.log(s); console.log(w);
-    var word = "";
-    while (word.length < length) word = word.concat(chance.weighted(s,w));
-    return word
+function generateWordAux(s,w,length,word) {
+    var wordAux = word;
+    while (wordAux.length < length) {
+        wordAux = wordAux.concat(chance.weighted(s,w));
+        if (wordAux.length > length) wordAux = word;
+        else wordAux = wordAux.concat(generateWordAux(s,w,length-wordAux.length,wordAux));
+        if (wordAux.length > length) wordAux = word;
+        else break
+    }
+    return wordAux
+};
+
+function generateWordAuxFixed(s,w,length,word) {
+    var wordAux = word;
+    while (wordAux.length != length) {
+        wordAux = wordAux.concat(chance.weighted(s,w));
+        if (wordAux.length > length) wordAux = word;
+        else wordAux = wordAux.concat(generateWordAuxFixed(s,w,length-wordAux.length,wordAux));
+        if (wordAux.length > length) wordAux = word;
+        else break
+    };
+    return wordAux
+};
+
+function generateWord(s,w,length,flag) {
+    if (flag) return generateWordAuxFixed(s,w,length,"");
+    else return generateWordAux(s,w,length,"");
 };
 
 var ruTuple = [["то",1.72],["ст",1.55],["но",1.46],["на",1.42],["ко",1.25],["ни",1.25],["не",1.23],["ен",1.22],["по",1.16],["ра",1.13],["ли",1.12],["он",1.06],["ер",1.00],["ро",1.00],["ол",0.99],["го",0.99],["ал",0.97],["от",0.93],["ов",0.93],["ть",0.89],["ре",0.89],["во",0.89],["пр",0.87],["та",0.87],["ка",0.87],["бы",0.85],["ел",0.84],["ет",0.82],["ос",0.82],["ан",0.80],["ла",0.80],["ор",0.79],["ве",0.77],["де",0.77],["ль",0.76],["ло",0.76],["те",0.75]];
