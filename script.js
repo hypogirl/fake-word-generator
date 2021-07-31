@@ -21,7 +21,8 @@ function generateWord(s,w,length,flag) {
     else return generateWordAux(s,w,length,"");
 };
 
-var generateButton = document.querySelector("#generateButton")
+var iAux = 1;
+var generateButton = document.querySelector("#generateButton");
 generateButton.onclick = (event) => {
     const langugageButton = document.querySelector("#langButton");
     const languageSel = document.getElementById("languageSel");
@@ -38,30 +39,48 @@ generateButton.onclick = (event) => {
     var words;
     words = document.getElementById("wordsInput").value;   
 
-    var syllableTuple;
-    if (language == "ru") syllableTuple = ruTuple;
-    else if (language == "pt") syllableTuple = ptTuple;
-    else return;
+    if (language && length && words) {
+        var syllableTuple;
+        if (language == "ru") syllableTuple = ruTuple;
+        else if (language == "pt") syllableTuple = ptTuple;
+        else return;
 
-    var syllables = [];
-    var weight = [];
-    for (let i = 0; i < syllableTuple.length; i++) {
-        syllables.push(syllableTuple[i][0]);
-        weight.push(syllableTuple[i][1]);
-    };
+        var syllables = [];
+        var weight = [];
+        for (let i = 0; i < syllableTuple.length; i++) {
+            syllables.push(syllableTuple[i][0]);
+            weight.push(syllableTuple[i][1]);
+        };
 
-    var wordList = [];
-    for (let i = 0; i < words; i++) {
-        wordList.push(generateWord(syllables,weight,length,fixedLength));
-    };
+        var wordList = [];
+        for (let i = 0; i < words; i++) {
+            wordList.push(generateWord(syllables,weight,length,fixedLength));
+        };
 
-    
-    for (let i = 0; i < wordList.length; i++) {
-        const p = document.createElement("p");
-        const node = document.createTextNode(wordList[i]);
-        p.appendChild(node);
-        const element = document.getElementById("result");
-        element.appendChild(p);
+        if (iAux == 1) {
+            document.getElementById("clearButton").style.removeProperty("background-color");
+            const h = document.createElement("h3");
+            const title = document.createTextNode("Generated words");
+            h.appendChild(title);
+            const result = document.getElementById("result");
+            result.appendChild(h);
+        }
+
+        for (let i = 0; i < wordList.length; i++) {
+            const b = document.createElement("b");
+            const num = document.createTextNode((iAux).toString() + ". ");
+            iAux++;
+            b.appendChild(num);
+            const node = document.createTextNode(wordList[i]);
+            const br = document.createElement("br");
+            //br.appendChild(node);
+            const result = document.getElementById("result");
+            result.appendChild(b); result.appendChild(node); result.appendChild(br);
+        };
     };
-    
 };
+
+var clearButton = document.querySelector("#clearButton");
+clearButton.onclick = (event) => {
+    iAux = 1; document.getElementById("clearButton").style.setProperty("background-color", "#7e7e7e", "important"); document.getElementById("result").innerHTML = "";
+}

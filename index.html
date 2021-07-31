@@ -8,25 +8,30 @@
         <div class="header">
             <h1>Fake Word Generator</h1>
         </div>
-        <form>
-            <h5>Language:</h5>
-            <select id="languageSel" class="initInput">
-                <option value="default">Select a language</option>
-                <option value="pt">Português</option>
-                <option value="ru">Русский</option>
-            </select>
-        </form>
-        <form>
-            <h5>Maximum word length:</h5>
-            <input type="number" id="lengthInput" name="lengthInput" min="2" class="initInput">
-            <!--div id="checkboxLength"><input type="checkbox" id="fixedLength">Fixed length?</div-->
-        </form>
-        <form>
-            <h5>Number of words to generate:</h5>
-            <input type="number" id="wordsInput" name="wordsInput" min="1" class="initInput">
-        </form>
-        <div class="btn" id="generateButton">Generate</div>
-        <div id="result"></div>
+        <div class="eg-row">
+            <div class="col-33">
+                <form>
+                    <h5>Language</h5>
+                    <select id="languageSel" class="initInput">
+                        <option value="default">Select a language</option>
+                        <option value="pt">Português</option>
+                        <option value="ru">Русский</option>
+                    </select>
+                </form>
+                <form>
+                    <h5>Maximum word length</h5>
+                    <input type="number" id="lengthInput" name="lengthInput" min="2" class="initInput">
+                    <!--div id="checkboxLength"><input type="checkbox" id="fixedLength">Fixed length?</div-->
+                </form>
+                <form>
+                    <h5>Number of words to generate</h5>
+                    <input type="number" id="wordsInput" name="wordsInput" min="1" class="initInput">
+                </form>
+                <div class="btn" id="generateButton">Generate</div>
+                <div class="btn" id="clearButton" style="background-color: #7e7e7e!important;">Clear generated words</div>
+            </div>
+            <div class="col-66" id="result"></div>
+        </div>
         <script src="https://chancejs.com/chance.js"></script>
         <script src="languages.js"></script>
         <script src="script.js"></script>
