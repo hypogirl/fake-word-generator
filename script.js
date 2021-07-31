@@ -41,8 +41,8 @@ generateButton.onclick = (event) => {
 
     if (language && length && words) {
         var syllableTuple;
-        if (language == "ru") syllableTuple = ruTuple;
-        else if (language == "pt") syllableTuple = ptTuple;
+        if (language == "ru") syllableTuple = ruSyllables;
+        else if (language == "pt") syllableTuple = ptSyllables;
         else return;
 
         var syllables = [];
