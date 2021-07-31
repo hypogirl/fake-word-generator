@@ -68,6 +68,7 @@ generateButton.onclick = (event) => {
 
         for (let i = 0; i < wordList.length; i++) {
             const b = document.createElement("b");
+            b.classList.add("unselectable");
             const num = document.createTextNode((iAux).toString() + ". ");
             iAux++;
             b.appendChild(num);

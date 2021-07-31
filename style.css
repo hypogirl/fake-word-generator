@@ -32,6 +32,14 @@ form {
     padding: 10px;
 }
 
+.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+ }
+
 /* Easy Grid */
 .eg-row{
     display:flex;
