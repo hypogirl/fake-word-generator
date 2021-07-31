@@ -7,5 +7,5 @@ For now, it's still in a very early stage with only two languages: Portuguese an
 
 ### What I want this generator to do in the future:
   * Know what possible syllable and letter mixing there are and not allow impossible words to be generated
-  * Add existing prefixes and suffixes already existing in a language
+  * Add prefixes and suffixes already existing in a language
   * Consider the right position for a certain syllable
