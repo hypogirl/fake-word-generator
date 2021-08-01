@@ -1,24 +1,21 @@
-function generateWordAux(s,w,length,word) {
-    var word = "";
-    while (word.length < length) word = word.concat(chance.weighted(s,w));
-    return word
-};
-
-function generateWordAuxFixed(s,w,length,word) {
-    var wordAux = word;
-    while (wordAux.length != length) {
-        wordAux = wordAux.concat(chance.weighted(s,w));
-        if (wordAux.length > length) wordAux = word;
-        else wordAux = wordAux.concat(generateWordAuxFixed(s,w,length-wordAux.length,wordAux));
-        if (wordAux.length > length) wordAux = word;
-        else break
-    };
-    return wordAux
-};
-
-function generateWord(s,w,length,flag) {
-    if (flag) return generateWordAuxFixed(s,w,length,"");
-    else return generateWordAux(s,w,length,"");
+function generateWord(s,w,iM,length) {
+    var word = [];
+    while (word.length*2.5 < length) word = word.concat([chance.weighted(s,w)]);
+    var flag = true;
+    while (iM && flag) {
+        flag = false
+        for (let i = 0; i < word.length-1; i++) {
+            if (iM.includes(word[i][word[i].length-1]+word[i+1][0])) {
+                console.log(word[i][word[i].length-1]+word[i+1][0]);
+                flag = true;
+                word[i] = chance.weighted(s,w);
+                console.log(word[i][word[i].length-1]+word[i+1][0]);
+            }
+        }
+    }
+    wordStr = "";
+    for (let i = 0; i < word.length; i++) wordStr += word[i];
+    return wordStr;
 };
 
 var iAux = 1;
@@ -32,17 +29,18 @@ generateButton.onclick = (event) => {
     const lengthButton = document.querySelector("#lengthButton");
     var length;
     var fixedLength;
-    length = document.getElementById("lengthInput").value; //fixedLength = document.querySelector('#fixedLength').checked;
+    if (document.getElementById("lengthInput").value > 0) length = document.getElementById("lengthInput").value;
     console.log(fixedLength);
 
     const wordsButton = document.querySelector("#wordsButton");
     var words;
-    words = document.getElementById("wordsInput").value;   
+    if (document.getElementById("wordsInput").value > 0) words = document.getElementById("wordsInput").value;
 
     if (language && length && words) {
         var syllableTuple;
+        var impossibleMix
         if (language == "ru") syllableTuple = ruSyllables;
-        else if (language == "pt") syllableTuple = ptSyllables;
+        else if (language == "pt") {syllableTuple = ptSyllables; impossibleMix = ptImpossibleMix}
         else return;
 
         var syllables = [];
@@ -54,7 +52,7 @@ generateButton.onclick = (event) => {
 
         var wordList = [];
         for (let i = 0; i < words; i++) {
-            wordList.push(generateWord(syllables,weight,length,fixedLength));
+            wordList.push(generateWord(syllables,weight,impossibleMix,length));
         };
 
         if (iAux == 1) {
@@ -74,7 +72,6 @@ generateButton.onclick = (event) => {
             b.appendChild(num);
             const node = document.createTextNode(wordList[i]);
             const br = document.createElement("br");
-            //br.appendChild(node);
             const result = document.getElementById("result");
             result.appendChild(b); result.appendChild(node); result.appendChild(br);
         };
