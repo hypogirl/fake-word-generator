@@ -1,3 +1,32 @@
+function addPrefix(word,pP,pTP,prefixes) {
+    var flagPre = false;
+    if (chance.weighted([true,false],[pTP,1-pTP])) {
+        const pre = chance.weighted(prefixes,pP);
+        if (pre.length > 3 && word.length > 2) {
+            word.shift();
+            word[0] = pre;
+            console.log("pre",pre);
+            flagPre = true;
+        }
+        else {word[0] = pre;flagPre = true;console.log("pre",pre);};
+    }
+    return [flagPre,word];
+}
+function addSuffix(word,sP,sTP,suffixes) {
+    var flagSu = false;
+    if (chance.weighted([true,false],[sTP,1-sTP])) {
+        const su = chance.weighted(suffixes,sP);
+        if (su.length > 3 && word.length > 2) {
+            word.pop();
+            word[word.length-1] = su;
+            console.log("su",su);
+        }
+        else {word[word.length-1] = su;console.log("su",su);}
+    }
+    return [flagSu,word];
+}
+
+
 function generateWord(syllables,weight,iS,eL,prefixes,suffixes,pP,sP,pTP,sTP,length) {
     var word = [];
     while (word.length*2.5 < length) word = word.concat([chance.weighted(syllables,weight)]);
@@ -5,28 +34,17 @@ function generateWord(syllables,weight,iS,eL,prefixes,suffixes,pP,sP,pTP,sTP,len
     if (eL && !eL.includes(word[word.length-1][word[word.length-1].length-1])) {word = word.concat([eL[chance.integer({ min: 0, max: eL.length-1})]]); console.log(word);};
     
     if (word.length > 1) {
-        var flagPre = false;
-        if (chance.weighted([true,false],[pTP,1-pTP])) {
-        const pre = chance.weighted(prefixes,pP);
-        if (pre.length > 3 && word.length > 3) {
-            word.shift();
-            word[0] = pre;
-            console.log("pre",pre);
-            flagPre = true;
+        if (chance.weighted([true,false],[pTP,sTP])) {
+            var flagPre;
+            [flagPre,word] = addPrefix(word,pP,pTP,prefixes);
+            if (flagPre && word.length > 2) addSuffix(word,sP,sTP, suffixes);
         }
-        else {word[0] = pre;flagPre = true;console.log("pre",pre);};
-        }
-
-        if (chance.weighted([true,false],[sTP,1-sTP])) {
-            const su = chance.weighted(suffixes,sP);
-            if (su.length > 3 && word.length > 3) {
-                word.pop();
-                word[word.length-1] = su;
-                console.log("su",su);
-            }
-            else if (flagPre && word.length > 3 || !flagPre) {word[word.length-1] = su;console.log("su",su);}
-            }
-    }
+        else {
+            var flagSu;
+            [flagSu,word] = addSuffix(word,sP,sTP, suffixes);
+            if (flagSu && word.length > 2) addPrefix(word,pP,pTP,prefixes);
+        };
+    };
 
     while (iS && flag) {
         flag = false
