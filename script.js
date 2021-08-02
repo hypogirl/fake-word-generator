@@ -1,19 +1,45 @@
-function generateWord(s,w,iS,eL,length) {
+function generateWord(syllables,weight,iS,eL,prefixes,suffixes,pP,sP,pTP,sTP,length) {
     var word = [];
-    while (word.length*2.5 < length) word = word.concat([chance.weighted(s,w)]);
+    while (word.length*2.5 < length) word = word.concat([chance.weighted(syllables,weight)]);
     var flag = true;
-    if (!eL.includes(word[word.length-1][word[word.length-1].length-1])) {word = word.concat([eL[chance.integer({ min: 0, max: eL.length-1})]]); console.log(word);};
+    if (eL && !eL.includes(word[word.length-1][word[word.length-1].length-1])) {word = word.concat([eL[chance.integer({ min: 0, max: eL.length-1})]]); console.log(word);};
+    
+    if (word.length > 1) {
+        var flagPre = false;
+        if (chance.weighted([true,false],[pTP,1-pTP])) {
+        const pre = chance.weighted(prefixes,pP);
+        if (pre.length > 3 && word.length > 3) {
+            word.shift();
+            word[0] = pre;
+            console.log("pre",pre);
+            flagPre = true;
+        }
+        else {word[0] = pre;flagPre = true;console.log("pre",pre);};
+        }
+
+        if (chance.weighted([true,false],[sTP,1-sTP])) {
+            const su = chance.weighted(suffixes,sP);
+            if (su.length > 3 && word.length > 3) {
+                word.pop();
+                word[word.length-1] = su;
+                console.log("su",su);
+            }
+            else if (flagPre && word.length > 3 || !flagPre) {word[word.length-1] = su;console.log("su",su);}
+            }
+    }
+
     while (iS && flag) {
         flag = false
         for (let i = 0; i < word.length-1; i++) {
             if (iS.includes(word[i][word[i].length-1]+word[i+1][0])) {
                 console.log(word);
                 flag = true;
-                word[i] = chance.weighted(s,w);
+                word[i] = chance.weighted(syllables,weight);
                 console.log(word);
             }
         }
     }
+
     wordStr = "";
     for (let i = 0; i < word.length; i++) wordStr += word[i];
     return wordStr;
@@ -41,8 +67,32 @@ generateButton.onclick = (event) => {
         var syllableTuple;
         var impossibleSyllables;
         var endingLetters;
-        if (language == "ru") syllableTuple = ruSyllables;
-        else if (language == "pt") {syllableTuple = ptSyllables; impossibleSyllables = ptImpossibleSyllables; endingLetters = ptEndingLetters;}
+        var prefixes;
+        var suffixes;
+        var prefixesProb;
+        var suffixesProb;
+        var prefixesTotalProb;
+        var suffixesTotalProb;
+
+        if (language == "ru") {
+            syllableTuple = ruSyllables;
+            prefixes = ruPrefixes;
+            suffixes = ruSuffixes;
+            prefixesProb = ruPrefixesProb;
+            suffixesProb = ruSuffixesProb;
+            prefixesTotalProb = ruPrefixesSum;
+            suffixesTotalProb = ruSuffixesSum;
+        }
+        else if (language == "pt") {
+            syllableTuple = ptSyllables;
+            impossibleSyllables = ptImpossibleSyllables;
+            endingLetters = ptEndingLetters;
+            prefixes = ptPrefixes;
+            suffixes = ptSuffixes;
+            prefixesProb = ptPrefixesProb;
+            suffixesProb = ptSuffixesProb;
+            prefixesTotalProb = ptPrefixesSum;
+            suffixesTotalProb = ptSuffixesSum;}
         else return;
 
         var syllables = [];
@@ -53,7 +103,7 @@ generateButton.onclick = (event) => {
         };
 
         var wordList = [];
-        for (let i = 0; i < words; i++) wordList.push(generateWord(syllables,weight,impossibleSyllables,endingLetters,length));
+        for (let i = 0; i < words; i++) wordList.push(generateWord(syllables,weight,impossibleSyllables,endingLetters,prefixes,suffixes,prefixesProb,suffixesProb,prefixesTotalProb,suffixesTotalProb,length));
 
         if (iAux == 1) {
             document.getElementById("clearButton").style.removeProperty("background-color");
