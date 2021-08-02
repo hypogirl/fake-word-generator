@@ -14,6 +14,9 @@ For now, it only supports two languages: Portuguese and Russian.
   * Consider the right position for a certain syllable (almost covered)
 
 
+------
 Most syllable frequencies were taken from: [https://www.sttmedia.com/syllablefrequencies](https://www.sttmedia.com/syllablefrequencies).
+
 Russian word list I used for probabilities: [https://github.com/hingston/russian/blob/master/100000-russian-words.txt](https://github.com/hingston/russian/blob/master/100000-russian-words.txt).
+
 Portuguese word list I used for probabilities: [https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/pt](https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/pt)
