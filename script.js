@@ -1,15 +1,16 @@
-function generateWord(s,w,iM,length) {
+function generateWord(s,w,iS,eL,length) {
     var word = [];
     while (word.length*2.5 < length) word = word.concat([chance.weighted(s,w)]);
     var flag = true;
-    while (iM && flag) {
+    if (!eL.includes(word[word.length-1][word[word.length-1].length-1])) {word = word.concat([eL[chance.integer({ min: 0, max: eL.length-1})]]); console.log(word);};
+    while (iS && flag) {
         flag = false
         for (let i = 0; i < word.length-1; i++) {
-            if (iM.includes(word[i][word[i].length-1]+word[i+1][0])) {
-                console.log(word[i][word[i].length-1]+word[i+1][0]);
+            if (iS.includes(word[i][word[i].length-1]+word[i+1][0])) {
+                console.log(word);
                 flag = true;
                 word[i] = chance.weighted(s,w);
-                console.log(word[i][word[i].length-1]+word[i+1][0]);
+                console.log(word);
             }
         }
     }
@@ -38,9 +39,10 @@ generateButton.onclick = (event) => {
 
     if (language && length && words) {
         var syllableTuple;
-        var impossibleMix
+        var impossibleSyllables;
+        var endingLetters;
         if (language == "ru") syllableTuple = ruSyllables;
-        else if (language == "pt") {syllableTuple = ptSyllables; impossibleMix = ptImpossibleMix}
+        else if (language == "pt") {syllableTuple = ptSyllables; impossibleSyllables = ptImpossibleSyllables; endingLetters = ptEndingLetters;}
         else return;
 
         var syllables = [];
@@ -51,9 +53,7 @@ generateButton.onclick = (event) => {
         };
 
         var wordList = [];
-        for (let i = 0; i < words; i++) {
-            wordList.push(generateWord(syllables,weight,impossibleMix,length));
-        };
+        for (let i = 0; i < words; i++) wordList.push(generateWord(syllables,weight,impossibleSyllables,endingLetters,length));
 
         if (iAux == 1) {
             document.getElementById("clearButton").style.removeProperty("background-color");
