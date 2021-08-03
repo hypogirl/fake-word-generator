@@ -5,10 +5,9 @@ function addPrefix(word,pP,pTP,prefixes) {
         if (pre.length > 3 && word.length > 2) {
             word.shift();
             word[0] = pre;
-            console.log("pre",pre);
             flagPre = true;
         }
-        else {word[0] = pre;flagPre = true;console.log("pre",pre);};
+        else word[0] = pre;flagPre = true;
     }
     return [flagPre,word];
 }
@@ -19,9 +18,8 @@ function addSuffix(word,sP,sTP,suffixes) {
         if (su.length > 3 && word.length > 2) {
             word.pop();
             word[word.length-1] = su;
-            console.log("su",su);
         }
-        else {word[word.length-1] = su;console.log("su",su);}
+        else word[word.length-1] = su;
     }
     return [flagSu,word];
 }
@@ -31,7 +29,7 @@ function generateWord(syllables,weight,iS,eL,prefixes,suffixes,pP,sP,pTP,sTP,len
     var word = [];
     while (word.length*2.5 < length) word = word.concat([chance.weighted(syllables,weight)]);
     var flag = true;
-    if (eL && !eL.includes(word[word.length-1][word[word.length-1].length-1])) {word = word.concat([eL[chance.integer({ min: 0, max: eL.length-1})]]); console.log(word);};
+    if (eL && !eL.includes(word[word.length-1][word[word.length-1].length-1])) word = word.concat([eL[chance.integer({ min: 0, max: eL.length-1})]]);
     
     if (word.length > 1) {
         if (chance.weighted([true,false],[pTP,sTP])) {
@@ -50,10 +48,8 @@ function generateWord(syllables,weight,iS,eL,prefixes,suffixes,pP,sP,pTP,sTP,len
         flag = false
         for (let i = 0; i < word.length-1; i++) {
             if (iS.includes(word[i][word[i].length-1]+word[i+1][0])) {
-                console.log(word);
                 flag = true;
                 word[i] = chance.weighted(syllables,weight);
-                console.log(word);
             }
         }
     }
@@ -75,7 +71,6 @@ generateButton.onclick = (event) => {
     var length;
     var fixedLength;
     if (document.getElementById("lengthInput").value > 0) length = document.getElementById("lengthInput").value;
-    console.log(fixedLength);
 
     const wordsButton = document.querySelector("#wordsButton");
     var words;
@@ -110,7 +105,17 @@ generateButton.onclick = (event) => {
             prefixesProb = ptPrefixesProb;
             suffixesProb = ptSuffixesProb;
             prefixesTotalProb = ptPrefixesSum;
-            suffixesTotalProb = ptSuffixesSum;}
+            suffixesTotalProb = ptSuffixesSum;
+        }
+        else if (language == "en") {
+            syllableTuple = enSyllables;
+            prefixes = enPrefixes;
+            suffixes = enSuffixes;
+            prefixesProb = enPrefixesProb;
+            suffixesProb = enSuffixesProb;
+            prefixesTotalProb = enPrefixesSum;
+            suffixesTotalProb = enSuffixesSum;
+        }
         else return;
 
         var syllables = [];
