@@ -96,6 +96,7 @@ generateButton.onclick = (event) => {
 
         if (iAux == 1) {
             document.getElementById("clearButton").style.removeProperty("background-color");
+            document.getElementById("clearButton").style.removeProperty("cursor");
             const h = document.createElement("h3");
             const title = document.createTextNode("Generated words");
             h.appendChild(title);
@@ -119,5 +120,8 @@ generateButton.onclick = (event) => {
 
 var clearButton = document.querySelector("#clearButton");
 clearButton.onclick = (event) => {
-    iAux = 1; document.getElementById("clearButton").style.setProperty("background-color", "#7e7e7e", "important"); document.getElementById("result").innerHTML = "";
+    iAux = 1;
+    document.getElementById("clearButton").style.setProperty("background-color", "#7e7e7e", "important");
+    document.getElementById("clearButton").style.setProperty("cursor", "default", "important");
+    document.getElementById("result").innerHTML = "";
 }
