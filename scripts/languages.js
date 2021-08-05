@@ -1,66 +1,3 @@
-function addPrefix(word,pP,pTP,prefixes) {
-    var flagPre = false;
-    if (chance.weighted([true,false],[pTP,1-pTP])) {
-        const pre = chance.weighted(prefixes,pP);
-        if (pre.length > 3 && word.length > 2) {
-            word.shift();
-            word[0] = pre;
-            flagPre = true;
-        }
-        else word[0] = pre;flagPre = true;
-    }
-    return [flagPre,word];
-}
-function addSuffix(word,sP,sTP,suffixes) {
-    var flagSu = false;
-    if (chance.weighted([true,false],[sTP,1-sTP])) {
-        const su = chance.weighted(suffixes,sP);
-        if (su.length > 3 && word.length > 2) {
-            word.pop();
-            word[word.length-1] = su;
-        }
-        else word[word.length-1] = su;
-    }
-    return [flagSu,word];
-}
-
-
-function generateWord(syllables,weight,language,length) {
-    var word = [];
-    while (word.length*2.5 < length) word = word.concat([chance.weighted(syllables,weight)]);
-    var flag = true;
-    if (language.endingLetters && !language.endingLetters.includes(word[word.length-1][word[word.length-1].length-1]))
-        word = word.concat([language.endingLetters[chance.integer({ min: 0, max: language.endingLetters.length-1})]]);
-    
-    if (word.length > 1) {
-        if (chance.weighted([true,false],[language.prefixesSum,language.suffixesSum])) {
-            var flagPre;
-            [flagPre,word] = addPrefix(word,language.prefixesProb,language.prefixesSum,language.prefixes);
-            if (flagPre && word.length > 2) addSuffix(word,language.suffixesProb,language.suffixesSum, language.suffixes);
-        }
-        else {
-            var flagSu;
-            [flagSu,word] = addSuffix(word,language.suffixesProb,language.suffixesSum, language.suffixes);
-            if (flagSu && word.length > 2) addPrefix(word,language.prefixesProb,language.prefixesSum,language.prefixes);
-        };
-    };
-
-    while (language.impossibleSyllables && flag) {
-        flag = false
-        for (let i = 0; i < word.length-1; i++) {
-            if (language.impossibleSyllables.includes(word[i][word[i].length-1]+word[i+1][0])) {
-                flag = true;
-                word[i] = chance.weighted(syllables,weight);
-            }
-        }
-    }
-
-    wordStr = "";
-    for (let i = 0; i < word.length; i++) wordStr += word[i];
-    return wordStr;
-};
-
-//Russian
 var russian = {
     syllables: ['то', 'ст', 'но', 'на', 'ко', 'ни', 'не', 'ен', 'по', 'ра', 'ли', 'он', 'ер', 'ро', 'ол', 'го', 'ал', 'от', 'ов', 'ть', 'ре', 'во', 'пр', 'та', 'ка', 'бы', 'ел', 'ет', 'ос', 'ан', 'ла', 'ор', 'ве', 'де', 'ль', 'ло', 'те'],
     syllablesProb: [1.72, 1.55, 1.46, 1.42, 1.25, 1.25, 1.23, 1.22, 1.16, 1.13, 1.12, 1.06, 1.0, 1.0, 0.99, 0.99, 0.97, 0.93, 0.93, 0.89, 0.89, 0.89, 0.87, 0.87, 0.87, 0.85, 0.84, 0.82, 0.82, 0.8, 0.8, 0.79, 0.77, 0.77, 0.76, 0.76, 0.75],
@@ -76,7 +13,6 @@ var russian = {
     generateWord: function () {return generateWord(this.syllables, this.syllablesProb, this, this.wordLength);}
 };
 
-//Portuguese
 var portuguese = {
     syllables: ['ra', 'en', 'de', 'ar', 'es', 'er', 'te', 'do', 'os', 'as', 'co', 'qua', 'que', 'qui', 'quo', 'se', 're', 'ta', 'ma', 'to', 'me', 'el', 'pa', 'or', 'em', 'ue', 'da', 'ad', 'an', 'in', 'po', 'um', 'al', 've', 'am', 'ri', 'om', 'sa', 'le', 'ca', 'ti', 'ent', 'que', 'par', 'ara', 'men', 'com', 'est', 'ado', 'ele', 'uma', 'era', 'voc', 'ant', 'con', 'ver', 'ria', 'seu', 'nha', 'ame', 'inh', 'por', 'per', 'mas', 'ela', 'tos', 'ada', 'dos', 'res', 'eri', 'and', 'qua', 'ito', 'ida'],
     syllablesProb: [2.1, 1.97, 1.97, 1.92, 1.91, 1.91, 1.82, 1.57, 1.55, 1.51, 1.46, 0.35, 0.35, 0.35, 0.35, 1.4, 1.31, 1.27, 1.26, 1.25, 1.22, 1.2, 1.2, 1.16, 1.1, 1.1, 1.01, 1.01, 1.01, 0.94, 0.89, 0.87, 0.86, 0.85, 0.83, 0.83, 0.82, 0.79, 0.78, 0.77, 0.75, 1.54, 1.41, 1.13, 0.9, 0.89, 0.87, 0.73, 0.71, 0.68, 0.47, 0.47, 0.45, 0.45, 0.42, 0.4, 0.39, 0.38, 0.38, 0.37, 0.36, 0.36, 0.35, 0.35, 0.34, 0.34, 0.33, 0.32, 0.32, 0.32, 0.32, 0.31, 0.31, 0.3],
@@ -92,7 +28,6 @@ var portuguese = {
     generateWord: function () {return generateWord(this.syllables, this.syllablesProb, this, this.wordLength);}
 };
 
-//English
 var english = {
     syllables: ['th', 'he', 'an', 'er', 'in', 're', 'nd', 'ou', 'en', 'on', 'ed', 'to', 'it', 'at', 'ha', 've', 'as', 'or', 'hi', 'ar', 'te', 'es', 'ng', 'is', 'st', 'le', 'al', 'ti', 'se', 'ea', 'wa', 'me', 'nt', 'ne', 'the', 'and', 'ing', 'her', 'you', 'ver', 'was', 'hat', 'for', 'not', 'thi', 'tha', 'his', 'ent', 'ion', 'ith', 'ere', 'wit', 'all', 'eve', 'oul', 'uld', 'tio', 'ter', 'had', 'hen', 'era', 'are', 'hin', 'our', 'sho', 'ted', 'ome', 'but'],
     syllablesProb: [3.99, 3.65, 2.17, 2.11, 2.1, 1.64, 1.62, 1.41, 1.37, 1.36, 1.29, 1.24, 1.24, 1.17, 1.17, 1.11, 1.09, 1.09, 1.07, 1.06, 1.0, 1.0, 0.99, 0.99, 0.96, 0.95, 0.93, 0.92, 0.85, 0.84, 0.84, 0.83, 0.77, 0.75, 3.67, 1.7, 1.06, 0.73, 0.72, 0.69, 0.66, 0.58, 0.56, 0.56, 0.55, 0.54, 0.49, 0.48, 0.47, 0.47, 0.47, 0.46, 0.45, 0.43, 0.41, 0.4, 0.37, 0.36, 0.35, 0.35, 0.33, 0.33, 0.33, 0.33, 0.33, 0.32, 0.31, 0.3],
