@@ -25,29 +25,30 @@ function addSuffix(word,sP,sTP,suffixes) {
 }
 
 
-function generateWord(syllables,weight,iS,eL,prefixes,suffixes,pP,sP,pTP,sTP,length) {
+function generateWord(syllables,weight,language,length) {
     var word = [];
     while (word.length*2.5 < length) word = word.concat([chance.weighted(syllables,weight)]);
     var flag = true;
-    if (eL && !eL.includes(word[word.length-1][word[word.length-1].length-1])) word = word.concat([eL[chance.integer({ min: 0, max: eL.length-1})]]);
+    if (language.endingLetters && !language.endingLetters.includes(word[word.length-1][word[word.length-1].length-1]))
+        word = word.concat([language.endingLetters[chance.integer({ min: 0, max: language.endingLetters.length-1})]]);
     
     if (word.length > 1) {
-        if (chance.weighted([true,false],[pTP,sTP])) {
+        if (chance.weighted([true,false],[language.prefixesSum,language.suffixesSum])) {
             var flagPre;
-            [flagPre,word] = addPrefix(word,pP,pTP,prefixes);
-            if (flagPre && word.length > 2) addSuffix(word,sP,sTP, suffixes);
+            [flagPre,word] = addPrefix(word,language.prefixesProb,language.prefixesSum,language.prefixes);
+            if (flagPre && word.length > 2) addSuffix(word,language.suffixesProb,language.suffixesSum, language.suffixes);
         }
         else {
             var flagSu;
-            [flagSu,word] = addSuffix(word,sP,sTP, suffixes);
-            if (flagSu && word.length > 2) addPrefix(word,pP,pTP,prefixes);
+            [flagSu,word] = addSuffix(word,language.suffixesProb,language.suffixesSum, language.suffixes);
+            if (flagSu && word.length > 2) addPrefix(word,language.prefixesProb,language.prefixesSum,language.prefixes);
         };
     };
 
-    while (iS && flag) {
+    while (language.impossibleSyllables && flag) {
         flag = false
         for (let i = 0; i < word.length-1; i++) {
-            if (iS.includes(word[i][word[i].length-1]+word[i+1][0])) {
+            if (language.impossibleSyllables.includes(word[i][word[i].length-1]+word[i+1][0])) {
                 flag = true;
                 word[i] = chance.weighted(syllables,weight);
             }
@@ -64,8 +65,8 @@ var generateButton = document.querySelector("#generateButton");
 generateButton.onclick = (event) => {
     const langugageButton = document.querySelector("#langButton");
     const languageSel = document.getElementById("languageSel");
-    var language;
-    if (languageSel.options[languageSel.selectedIndex].value != "default") language = languageSel.options[languageSel.selectedIndex].value;
+    var langValue;
+    if (languageSel.options[languageSel.selectedIndex].value != "default") langValue = languageSel.options[languageSel.selectedIndex].value;
 
     const lengthButton = document.querySelector("#lengthButton");
     var length;
@@ -76,57 +77,22 @@ generateButton.onclick = (event) => {
     var words;
     if (document.getElementById("wordsInput").value > 0) words = document.getElementById("wordsInput").value;
 
-    if (language && length && words) {
-        var syllableTuple;
-        var impossibleSyllables;
-        var endingLetters;
-        var prefixes;
-        var suffixes;
-        var prefixesProb;
-        var suffixesProb;
-        var prefixesTotalProb;
-        var suffixesTotalProb;
-
-        if (language == "ru") {
-            syllableTuple = ruSyllables;
-            prefixes = ruPrefixes;
-            suffixes = ruSuffixes;
-            prefixesProb = ruPrefixesProb;
-            suffixesProb = ruSuffixesProb;
-            prefixesTotalProb = ruPrefixesSum;
-            suffixesTotalProb = ruSuffixesSum;
-        }
-        else if (language == "pt") {
-            syllableTuple = ptSyllables;
-            impossibleSyllables = ptImpossibleSyllables;
-            endingLetters = ptEndingLetters;
-            prefixes = ptPrefixes;
-            suffixes = ptSuffixes;
-            prefixesProb = ptPrefixesProb;
-            suffixesProb = ptSuffixesProb;
-            prefixesTotalProb = ptPrefixesSum;
-            suffixesTotalProb = ptSuffixesSum;
-        }
-        else if (language == "en") {
-            syllableTuple = enSyllables;
-            prefixes = enPrefixes;
-            suffixes = enSuffixes;
-            prefixesProb = enPrefixesProb;
-            suffixesProb = enSuffixesProb;
-            prefixesTotalProb = enPrefixesSum;
-            suffixesTotalProb = enSuffixesSum;
-        }
+    if (langValue && length && words) {
+        var language
+        if (langValue == "ru") language = russian;
+        else if (langValue == "pt") language = portuguese;
+        else if (langValue == "en") language = english;
         else return;
 
         var syllables = [];
         var weight = [];
-        for (let i = 0; i < syllableTuple.length; i++) {
-            syllables.push(syllableTuple[i][0]);
-            weight.push(syllableTuple[i][1]);
+        for (let i = 0; i < language.syllables.length; i++) {
+            syllables.push(language.syllables[i][0]);
+            weight.push(language.syllables[i][1]);
         };
 
         var wordList = [];
-        for (let i = 0; i < words; i++) wordList.push(generateWord(syllables,weight,impossibleSyllables,endingLetters,prefixes,suffixes,prefixesProb,suffixesProb,prefixesTotalProb,suffixesTotalProb,length));
+        for (let i = 0; i < words; i++) wordList.push(generateWord(syllables,weight,language,length));
 
         if (iAux == 1) {
             document.getElementById("clearButton").style.removeProperty("background-color");
