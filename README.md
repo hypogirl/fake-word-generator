@@ -10,3 +10,6 @@ Essentially, what this generator aims to do is to randomly generate fake words t
 
 ### What I want this generator to do in the future:
   * Consider the right position for a certain syllable (almost covered)
+
+----
+**Sources for the language analysis:** [sources.md](sources.md)
