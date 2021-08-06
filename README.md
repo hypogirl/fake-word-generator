@@ -10,27 +10,3 @@ Essentially, what this generator aims to do is to randomly generate fake words t
 
 ### What I want this generator to do in the future:
   * Consider the right position for a certain syllable (almost covered)
-
-
-------
-Sources for the language analysis:
-
-https://www.sttmedia.com/syllablefrequencies
-
-https://github.com/hingston/russian/blob/master/100000-russian-words.txt
-
-https://en.wiktionary.org/wiki/Category:Russian_prefixes
-
-https://en.wiktionary.org/wiki/Category:Russian_suffixes
-
-https://github.com/hermitdave/FrequencyWords/tree/master/content/2018/pt
-
-https://en.wiktionary.org/wiki/Category:Portuguese_prefixes
-
-https://en.wiktionary.org/wiki/Category:Portuguese_suffixes
-
-https://github.com/dwyl/english-words/blob/master/words_alpha.txt
-
-https://dictionary.cambridge.org/pt/gramatica/gramatica-britanica/prefixes
-
-https://dictionary.cambridge.org/pt/gramatica/gramatica-britanica/suffixes
