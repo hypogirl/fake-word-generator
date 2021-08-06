@@ -1,8 +1,6 @@
 # Fake Word Generator
 Essentially, what this generator aims to do is to randomly generate fake words that "look" and "sound" like it belongs to a specific language you select.
 
-For now, it only supports two languages: Portuguese and Russian.
-
 (Note: It seems to work better for 5-7 character words.)
 
 ### What this generator already does:
