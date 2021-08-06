@@ -17,9 +17,10 @@ generateButton.onclick = (event) => {
 
     if (langValue && length && words) {
         var language
-        if (langValue == "ru") {language = russian;}
-        else if (langValue == "pt") {language = portuguese;}
-        else if (langValue == "en") {language = english;}
+        if (langValue == "ru") language = russian;
+        else if (langValue == "pt") language = portuguese;
+        else if (langValue == "en") language = english;
+        else if (langValue == "es") language = spanish;
         else return;
 
         language.wordLength = length;

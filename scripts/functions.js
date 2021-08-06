@@ -32,7 +32,7 @@ function generateWord(syllables,weight,language,length) {
     if (language.endingLetters && !language.endingLetters.includes(word[word.length-1][word[word.length-1].length-1]))
         word = word.concat([language.endingLetters[chance.integer({ min: 0, max: language.endingLetters.length-1})]]);
     
-    if (word.length > 1) {
+    if (language.prefixes && language.suffixes && word.length > 1) {
         if (chance.weighted([true,false],[language.prefixesSum,language.suffixesSum])) {
             var flagPre;
             [flagPre,word] = addPrefix(word,language.prefixesProb,language.prefixesSum,language.prefixes);
