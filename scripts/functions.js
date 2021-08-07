@@ -1,20 +1,20 @@
-function addPrefix(word,pP,pTP,prefixes) {
+function addPrefix(word,prefixes) {
     var flagPre = false;
-    if (chance.weighted([true,false],[pTP,1-pTP])) {
-        const pre = chance.weighted(prefixes,pP);
+    if (chance.weighted([true,false],[prefixes.highestWeight,1-prefixes.highestWeight])) {
+        const pre = chance.weighted(prefixes.list,prefixes.weight);
         if (pre.length > 3 && word.length > 2) {
             word.shift();
             word[0] = pre;
             flagPre = true;
         }
-        else word[0] = pre;flagPre = true;
+        else word[0] = pre; flagPre = true;
     }
     return [flagPre,word];
 }
-function addSuffix(word,sP,sTP,suffixes) {
+function addSuffix(word,suffixes) {
     var flagSu = false;
-    if (chance.weighted([true,false],[sTP,1-sTP])) {
-        const su = chance.weighted(suffixes,sP);
+    if (chance.weighted([true,false],[suffixes.highestWeight,1-suffixes.highestWeight])) {
+        const su = chance.weighted(suffixes.list,suffixes.weight);
         if (su.length > 3 && word.length > 2) {
             word.pop();
             word[word.length-1] = su;
@@ -24,38 +24,52 @@ function addSuffix(word,sP,sTP,suffixes) {
     return [flagSu,word];
 }
 
-
-function generateWord(syllables,weight,language,length) {
+function initWord(syllables,length) {
     var word = [];
-    while (word.length*2.5 < length) word = word.concat([chance.weighted(syllables,weight)]);
-    var flag = true;
-    if (language.endingLetters && !language.endingLetters.includes(word[word.length-1][word[word.length-1].length-1]))
-        word = word.concat([language.endingLetters[chance.integer({ min: 0, max: language.endingLetters.length-1})]]);
-    
-    if (language.prefixes && language.suffixes && word.length > 1) {
-        if (chance.weighted([true,false],[language.prefixesSum,language.suffixesSum])) {
+    while (word.length*2.5 < length) word = word.concat([chance.weighted(syllables.list,syllables.weight)]);
+    return word;
+}
+
+function addPrefixSuffix(word, prefixes, suffixes) {
+    if (prefixes && suffixes && word.length > 1) {
+        if (chance.weighted([true,false],[prefixes.highestWeight,suffixes.highestWeight])) {
             var flagPre;
-            [flagPre,word] = addPrefix(word,language.prefixesProb,language.prefixesSum,language.prefixes);
-            if (flagPre && word.length > 2) addSuffix(word,language.suffixesProb,language.suffixesSum, language.suffixes);
+            [flagPre,word] = addPrefix(word,prefixes);
+            if (flagPre && word.length > 2) addSuffix(word,suffixes);
         }
         else {
             var flagSu;
-            [flagSu,word] = addSuffix(word,language.suffixesProb,language.suffixesSum, language.suffixes);
-            if (flagSu && word.length > 2) addPrefix(word,language.prefixesProb,language.prefixesSum,language.prefixes);
+            [flagSu,word] = addSuffix(word,suffixes);
+            if (flagSu && word.length > 2) addPrefix(word,prefixes);
         };
     };
+    return word;
+}
 
-    while (language.impossibleSyllables && flag) {
+function addEndingLetter(word,endingLetters) {
+    if (endingLetters && !endingLetters.includes(word[word.length-1][word[word.length-1].length-1]))
+        word = word.concat([endingLetters[chance.integer({ min: 0, max: endingLetters.length-1})]]);
+    return word;
+}
+
+function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
+    var flag = true;
+    while (impossibleSyllables && flag) {
         flag = false
         for (let i = 0; i < word.length-1; i++) {
-            if (language.impossibleSyllables.includes(word[i][word[i].length-1]+word[i+1][0])) {
+            if (impossibleSyllables.includes(word[i][word[i].length-1]+word[i+1][0])) {
                 flag = true;
-                word[i] = chance.weighted(syllables,weight);
+                word[i] = chance.weighted(syllables.list,syllables.weight);
             }
         }
     }
+    return word;
+}
 
-    wordStr = "";
-    for (let i = 0; i < word.length; i++) wordStr += word[i];
-    return wordStr;
+function generateWord(language) {
+    word = initWord(language.syllables, language.wordLength);
+    word = addPrefixSuffix(word,language.prefixes,language.suffixes);
+    word = addEndingLetter(word,language.endingLetters);
+    word = removeImpossibleSyllable(word,language.impossibleSyllables,language.syllables);
+    return word.join('');
 };
