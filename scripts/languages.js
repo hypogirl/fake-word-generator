@@ -22,7 +22,7 @@ var russian = {
 
 var portuguese = {
     syllables: {
-        list: ['ra', 'en', 'de', 'ar', 'es', 'er', 'te', 'do', 'os', 'as', 'co', 'qua', 'que', 'qui', 'quo', 'se', 're', 'ta', 'ma', 'to', 'me', 'el', 'pa', 'or', 'em', 'ue', 'da', 'ad', 'an', 'in', 'po', 'um', 'al', 've', 'am', 'ri', 'om', 'sa', 'le', 'ca', 'ti', 'ent', 'que', 'par', 'ara', 'men', 'com', 'est', 'ado', 'ele', 'uma', 'era', 'voc', 'ant', 'con', 'ver', 'ria', 'seu', 'nha', 'ame', 'inh', 'por', 'per', 'mas', 'ela', 'tos', 'ada', 'dos', 'res', 'eri', 'and', 'qua', 'ito', 'ida'],
+        list: ['ra', 'en', 'de', 'ar', 'es', 'er', 'te', 'do', 'os', 'as', 'co', 'qua', 'que', 'qui', 'quo', 'se', 're', 'ta', 'ma', 'to', 'me', 'el', 'pa', 'or', 'em', 'ue', 'da', 'ad', 'an', 'in', 'po', 'um', 'al', 've', 'am', 'ri', 'om', 'sa', 'le', 'ca', 'ti', 'ent', 'que', 'par', 'ara', 'men', 'com', 'est', 'ado', 'ele', 'uma', 'era', 'voc', 'ant', 'con', 'ver', 'ria', 'seu', 'inha', 'ame', 'inho', 'por', 'per', 'mas', 'ela', 'tos', 'ada', 'dos', 'res', 'eri', 'and', 'qua', 'ito', 'ida'],
         weight: [2.1, 1.97, 1.97, 1.92, 1.91, 1.91, 1.82, 1.57, 1.55, 1.51, 1.46, 0.35, 0.35, 0.35, 0.35, 1.4, 1.31, 1.27, 1.26, 1.25, 1.22, 1.2, 1.2, 1.16, 1.1, 1.1, 1.01, 1.01, 1.01, 0.94, 0.89, 0.87, 0.86, 0.85, 0.83, 0.83, 0.82, 0.79, 0.78, 0.77, 0.75, 1.54, 1.41, 1.13, 0.9, 0.89, 0.87, 0.73, 0.71, 0.68, 0.47, 0.47, 0.45, 0.45, 0.42, 0.4, 0.39, 0.38, 0.38, 0.37, 0.36, 0.36, 0.35, 0.35, 0.34, 0.34, 0.33, 0.32, 0.32, 0.32, 0.32, 0.31, 0.31, 0.3],
     },
     prefixes: {
@@ -37,8 +37,10 @@ var portuguese = {
     },
     impossibleSyllables: ["aa","aâ","bb","bc","cc","cd","dd","dn","dt","êe","ee","eo","ff","gg","hh","ii","jj","ll","mm","mn","mt","mc","mç","md","mg","mj","ml","mq","mr","ms","mv","mx","mz","nm","nn","nb","np","nz","oo","pp","qq","sn","sr","tt","tc","td","tm","tp","tq","ts","tv","uu","ue","vv","xx","zz"],
     endingLetters: ["a","e","i","o","l","m","r","s","z"],
+    impossibleBeginnings: ["inh"],
+    impossibleEndings: ["tz"],
     wordLength: null,
-    generateWord: function () {return generateWord(this);}
+    generateWord: function () {return generateWordPt(this);}
 };
 
 

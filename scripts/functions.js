@@ -7,8 +7,11 @@ function addPrefix(word,prefixes) {
             word[0] = pre;
             flagPre = true;
         }
-        else word[0] = pre; flagPre = true;
-    }
+        else {
+            word[0] = pre;
+            flagPre = true;
+        };
+    };
     return [flagPre,word];
 }
 function addSuffix(word,suffixes) {
@@ -18,9 +21,13 @@ function addSuffix(word,suffixes) {
         if (su.length > 3 && word.length > 2) {
             word.pop();
             word[word.length-1] = su;
+            flagSu = true;
         }
-        else word[word.length-1] = su;
-    }
+        else {
+            word[word.length-1] = su;
+            flagSu = true;
+        };
+    };
     return [flagSu,word];
 }
 
@@ -60,16 +67,58 @@ function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
             if (impossibleSyllables.includes(word[i][word[i].length-1]+word[i+1][0])) {
                 flag = true;
                 word[i] = chance.weighted(syllables.list,syllables.weight);
-            }
-        }
-    }
+            };
+        };
+    };
     return word;
 }
 
-function generateWord(language) {
-    word = initWord(language.syllables, language.wordLength);
-    word = addPrefixSuffix(word,language.prefixes,language.suffixes);
-    word = addEndingLetter(word,language.endingLetters);
-    word = removeImpossibleSyllable(word,language.impossibleSyllables,language.syllables);
-    return word.join('');
+function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefixes) {
+    [flagPre,word] = addPrefix(word,prefixes);
+    if (flagPre) return word;
+    
+    flag = true;
+    while (flag) {
+        flag = false;
+        for (let i = 0; i < impossibleBeginnings.length; i++) {
+            if (word[0].startsWith(impossibleBeginnings[i])) {
+                flag = true;
+                word[0] = chance.weighted(syllables.list,syllables.weight);
+            };
+        };
+    };
+    return word;
+};
+
+function removeImpossibleEnding(word, impossibleEndings, syllables, suffixes) {
+    [flagSu,word] = addSuffix(word,suffixes);
+    if (flagSu) return word;
+    
+    flag = true;
+    while (flag) {
+        flag = false;
+        for (let i = 0; i < impossibleEndings.length; i++) {
+            if (word[word.length-1].endsWith(impossibleEndings[i])) {
+                flag = true;
+                word[word.length-1] = chance.weighted(syllables.list,syllables.weight);
+            };
+        };
+    };
+    return word;
+};
+
+function isConsonant(letter) {
+    return (!(letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u'))
+};
+
+function removeExtraConsonants(word, syllables) {
+    flag = true;
+    while (flag) {
+        flag = false;
+        for (let i = 1; i < word.length-1; i++) {
+            if (isConsonant(word[i-1][word[i-1].length-1]) && isConsonant(word[i][0]) && isConsonant(word[i][1]) || isConsonant(word[i][word[i].length-1]) && isConsonant(word[i][word[i].length-2]) && isConsonant(word[i+1][0]))
+                word[i] = chance.weighted(syllables.list,syllables.weight);
+        };
+    };
+    return word;
 };
