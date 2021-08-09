@@ -115,9 +115,16 @@ function removeExtraConsonants(word, syllables) {
     flag = true;
     while (flag) {
         flag = false;
-        for (let i = 1; i < word.length-1; i++) {
-            if (isConsonant(word[i-1][word[i-1].length-1]) && isConsonant(word[i][0]) && isConsonant(word[i][1]) || isConsonant(word[i][word[i].length-1]) && isConsonant(word[i][word[i].length-2]) && isConsonant(word[i+1][0]))
-                word[i] = chance.weighted(syllables.list,syllables.weight);
+        if (word.length > 2)
+            for (let i = 1; i < word.length-1; i++) {
+                if (isConsonant(word[i-1][word[i-1].length-1]) && isConsonant(word[i][0]) && isConsonant(word[i][1]) || isConsonant(word[i][word[i].length-1]) && isConsonant(word[i][word[i].length-2]) && isConsonant(word[i+1][0])) {
+                    word[i] = chance.weighted(syllables.list,syllables.weight);
+                    flag = true;
+                };
+            }
+        else if (word.length == 2 && isConsonant(word[0][word[0].length-1]) && isConsonant(word[1][0]) && isConsonant(word[1][1]) || isConsonant(word[0][word[0].length-1]) && isConsonant(word[0][word[0].length-2]) && isConsonant(word[1][0])) {
+                word[chance.integer({min:0,max:1})] = chance.weighted(syllables.list,syllables.weight);
+                flag = true;
         };
     };
     return word;
