@@ -1,4 +1,4 @@
-function generateWord(language) {
+function generateWordDefault(language) {
     word = initWord(language.syllables, language.wordLength);
     word = addPrefixSuffix(word,language.prefixes,language.suffixes);
     word = addEndingLetter(word,language.endingLetters);
