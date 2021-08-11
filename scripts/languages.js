@@ -36,9 +36,9 @@ var portuguese = {
         highestWeight: 0.36145043075736144,
     },
     impossibleSyllables: ["aa","aâ","bb","bc","cc","cd","dd","dn","dt","ea","êe","ee","eo","ff","gg","hh","ii","jj","ll","mm","mn","mt","mc","mç","md","mg","mj","ml","mq","mr","ms","mv","mx","mz","nm","nn","nb","np","nz","oo","pp","qq","sn","sr","tt","tc","td","tm","tp","tq","ts","tv","uu","ue","vv","xx","zz"],
-    endingLetters: ["a","e","i","o","l","m","r","s","z"],
+    endingLetters: ["a","e","o","l","m","r","s","z"],
     impossibleBeginnings: ["aa","aá","inh","ue","ee"],
-    impossibleEndings: ["aa","nl","tz","cd","dm","nr","ii","oo"],
+    impossibleEndings: ["aa","cl","nl","tz","cd","dm","nr","ii","oo"],
     wordLength: null,
     generateWord: function () {return generateWordPt(this);}
 };

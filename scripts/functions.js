@@ -74,7 +74,10 @@ function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
 }
 
 function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefixes) {
-    [flagPre,word] = addPrefix(word,prefixes);
+    var flagPre = true;
+    for (let i = 0; i < impossibleBeginnings.length; i++)
+        if (word[0].startsWith(impossibleBeginnings[i]))
+            [flagPre,word] = addPrefix(word,prefixes);
     if (flagPre) return word;
     
     flag = true;
@@ -91,7 +94,9 @@ function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefix
 };
 
 function removeImpossibleEnding(word, impossibleEndings, syllables, suffixes) {
-    [flagSu,word] = addSuffix(word,suffixes);
+    flagSu = true;
+    for (let i = 0; i < impossibleEndings.length; i++)
+        if (word[word.length-1].endsWith(impossibleEndings[i])) [flagSu,word] = addSuffix(word,suffixes);
     if (flagSu) return word;
     
     flag = true;
