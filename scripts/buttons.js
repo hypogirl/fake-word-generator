@@ -9,7 +9,7 @@ generateButton.onclick = (event) => {
     const lengthButton = document.querySelector("#lengthButton");
     var length;
     var fixedLength;
-    if (document.getElementById("lengthInput").value > 0) length = document.getElementById("lengthInput").value;
+    if (document.getElementById("lengthInput").value > 0) {length = document.getElementById("lengthInput").value; fixedLength = document.querySelector('#fixedLength').value;};
 
     const wordsButton = document.querySelector("#wordsButton");
     var words;
@@ -25,7 +25,18 @@ generateButton.onclick = (event) => {
 
         language.wordLength = length;
         var wordList = [];
-        for (let i = 0; i < words; i++) wordList.push(language.generateWord());
+        if (fixedLength) {
+            var wordCount = 0;
+            var word;
+            while (wordCount < words) {
+                word = language.generateWord();
+                if (word.length == length) {
+                    wordList.push(word);
+                    wordCount++;
+                };
+            };
+        }
+        else for (let i = 0; i < words; i++) wordList.push(language.generateWord());
 
         if (iAux == 1) {
             document.getElementById("clearButton").style.removeProperty("background-color");
