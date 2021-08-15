@@ -38,7 +38,7 @@ function initWord(syllables,length) {
 }
 
 function addPrefixSuffix(word, prefixes, suffixes) {
-    if (prefixes && suffixes && word.length > 1) {
+    if (word.length > 1) {
         if (chance.weighted([true,false],[prefixes.highestWeight,suffixes.highestWeight])) {
             var flagPre;
             [flagPre,word] = addPrefix(word,prefixes);
@@ -54,14 +54,14 @@ function addPrefixSuffix(word, prefixes, suffixes) {
 }
 
 function addEndingLetter(word,endingLetters) {
-    if (endingLetters && !endingLetters.includes(word[word.length-1][word[word.length-1].length-1]))
+    if (!endingLetters.includes(word[word.length-1][word[word.length-1].length-1]))
         word = word.concat([endingLetters[chance.integer({ min: 0, max: endingLetters.length-1})]]);
     return word;
 }
 
 function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
     var flag = true;
-    while (impossibleSyllables && flag) {
+    while (flag) {
         flag = false
         for (let i = 0; i < word.length-1; i++) {
             if (impossibleSyllables.includes(word[i][word[i].length-1]+word[i+1][0])) {

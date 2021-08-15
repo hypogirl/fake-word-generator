@@ -1,8 +1,6 @@
 function generateWordDefault(language) {
     word = initWord(language.syllables, language.wordLength);
     word = addPrefixSuffix(word,language.prefixes,language.suffixes);
-    word = addEndingLetter(word,language.endingLetters);
-    word = removeImpossibleSyllable(word,language.impossibleSyllables,language.syllables);
     return word.join('');
 };
 
