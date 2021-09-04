@@ -9,8 +9,7 @@ generateButton.onclick = (event) => {
     const lengthButton = document.querySelector("#lengthButton");
     var length;
     var fixedLength;
-    if (document.getElementById("lengthInput").value > 0) {length = document.getElementById("lengthInput").value; fixedLength = document.querySelector('#fixedLength').value;};
-
+    if (document.getElementById("lengthInput").value > 0) {length = document.getElementById("lengthInput").value; fixedLength = document.querySelector('#fixedLength').checked;};
     const wordsButton = document.querySelector("#wordsButton");
     var words;
     if (document.getElementById("wordsInput").value > 0) words = document.getElementById("wordsInput").value;

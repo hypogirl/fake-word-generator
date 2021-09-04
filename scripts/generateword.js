@@ -14,3 +14,10 @@ function generateWordPt(language) {
     word = removeExtraConsonants(word, language.syllables);
     return word.join('');
 };
+
+function generateWordRu(language) {
+    word = initWord(language.syllables, language.wordLength);
+    word = addPrefixSuffix(word,language.prefixes,language.suffixes);
+    word = removeExtraConsonants(word, language.syllables);
+    return word.join('');
+};

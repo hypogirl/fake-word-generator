@@ -16,7 +16,7 @@ var russian = {
     impossibleSyllables: null,
     endingLetters: null,
     wordLength: null,
-    generateWord: function () {return generateWordDefault(this);}
+    generateWord: function () {return generateWordRu(this);}
 };
 
 
