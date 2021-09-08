@@ -113,7 +113,7 @@ function removeImpossibleEnding(word, impossibleEndings, syllables, suffixes) {
 };
 
 function isConsonant(letter) {
-    return (!(letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u' || letter == 'я' || letter == 'o' || letter == 'ё' || letter == 'ю' || letter == 'у' || letter == 'э' || letter == 'е' || letter == 'и' || letter == 'ы'))
+    return (!['a','e','i','o','u','я','o','ё','ю','у','э','е','и','ы'].includes(letter))
 };
 
 function removeExtraConsonants(word, syllables) {
