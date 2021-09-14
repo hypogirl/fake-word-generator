@@ -1,12 +1,43 @@
+function addGen(word, language) {
+    var flagCount = 0;
+    var wordTemp;
+    if (["pt"].includes(language.code)) {
+        wordTemp = addEndingLetter(word,language.endingLetters);
+        if (!word.equals(wordTemp)) flagCount++;
+        word = wordTemp;
+    };
+    if (["pt"].includes(language.code)) {
+        wordTemp = removeImpossibleSyllable(word,language.impossibleSyllables,language.syllables);
+        if (!word.equals(wordTemp)) flagCount++;
+        word = wordTemp;
+    };
+    if (["pt"].includes(language.code)) {
+        wordTemp = removeImpossibleBeginning(word, language.impossibleBeginnings, language.syllables, language.prefixes);
+        if (!word.equals(wordTemp)) flagCount++;
+        word = wordTemp;
+    };
+    if (["pt"].includes(language.code)) {
+        wordTemp = removeImpossibleEnding(word, language.impossibleEndings, language.syllables, language.suffixes);
+        if (!word.equals(wordTemp)) flagCount++;
+        word = wordTemp;
+    };
+    if (["pt","ru"].includes(language.code)) {
+        wordTemp = removeExtraConsonants(word, language.syllables);
+        if (!word.equals(wordTemp)) flagCount++;
+    };
+    return [word,flagCount];
+}
+
 function generateWord(language) {
+    var word;
+    var flagCount;
     word = initWord(language.syllables, language.wordLength);
     word = addPrefixSuffix(word,language.prefixes,language.suffixes);
-    if (["pt"].includes(language.code)) word = addEndingLetter(word,language.endingLetters);
-    if (["pt"].includes(language.code)) word = removeImpossibleSyllable(word,language.impossibleSyllables,language.syllables);
-    if (["pt"].includes(language.code)) word = removeImpossibleBeginning(word, language.impossibleBeginnings, language.syllables, language.prefixes);
-    if (["pt"].includes(language.code)) word = removeImpossibleEnding(word, language.impossibleEndings, language.syllables, language.suffixes);
-    if (["pt","ru"].includes(language.code)) word = removeExtraConsonants(word, language.syllables);
-    console.log(word);
+    [word,flagCount] = addGen(word, language);
+    while (flagCount > 0) {
+        [word,flagCount] = addGen(word, language);
+        console.log(flagCount)
+    }
     return word.join('');
 };
 /*

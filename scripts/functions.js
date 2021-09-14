@@ -1,3 +1,22 @@
+Array.prototype.equals = function (array) {
+    if (!array)
+        return false;
+
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            if (!this[i].equals(array[i]))
+                return false;       
+        }           
+        else if (this[i] != array[i]) { 
+            return false;   
+        }           
+    }       
+    return true;
+}
+
 function addPrefix(word,prefixes) {
     var flagPre = false;
     if (chance.weighted([true,false],[prefixes.highestWeight,1-prefixes.highestWeight])) {
@@ -54,62 +73,66 @@ function addPrefixSuffix(word, prefixes, suffixes) {
 }
 
 function addEndingLetter(word,endingLetters) {
-    if (!endingLetters.includes(word[word.length-1][word[word.length-1].length-1]))
-        word = word.concat([endingLetters[chance.integer({ min: 0, max: endingLetters.length-1})]]);
-    return word;
+    var wordTemp = [...word];
+    if (!endingLetters.includes(wordTemp[wordTemp.length-1][wordTemp[wordTemp.length-1].length-1]))
+        wordTemp = wordTemp.concat([endingLetters[chance.integer({ min: 0, max: endingLetters.length-1})]]);
+    return wordTemp;
 }
 
 function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
     var flag = true;
+    var wordTemp = [...word];
     while (flag) {
         flag = false
-        for (let i = 0; i < word.length-1; i++) {
-            if (impossibleSyllables.includes(word[i][word[i].length-1]+word[i+1][0])) {
+        for (let i = 0; i < wordTemp.length-1; i++) {
+            if (impossibleSyllables.includes(wordTemp[i][wordTemp[i].length-1]+wordTemp[i+1][0])) {
                 flag = true;
-                word[i] = chance.weighted(syllables.list,syllables.weight);
+                wordTemp[i] = chance.weighted(syllables.list,syllables.weight);
             };
         };
     };
-    return word;
+    return wordTemp;
 }
 
 function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefixes) {
     var flagPre = true;
+    var wordTemp = [...word];
     for (let i = 0; i < impossibleBeginnings.length; i++)
-        if (word[0].startsWith(impossibleBeginnings[i]))
-            [flagPre,word] = addPrefix(word,prefixes);
-    if (flagPre) return word;
+        if (wordTemp[0].startsWith(impossibleBeginnings[i]))
+            [flagPre,wordTemp] = addPrefix(wordTemp,prefixes);
+    if (flagPre) return wordTemp;
     
     flag = true;
     while (flag) {
         flag = false;
         for (let i = 0; i < impossibleBeginnings.length; i++) {
-            if (word[0].startsWith(impossibleBeginnings[i])) {
+            if (wordTemp[0].startsWith(impossibleBeginnings[i])) {
                 flag = true;
-                word[0] = chance.weighted(syllables.list,syllables.weight);
+                wordTemp[0] = chance.weighted(syllables.list,syllables.weight);
             };
         };
     };
-    return word;
+    return wordTemp;
 };
 
 function removeImpossibleEnding(word, impossibleEndings, syllables, suffixes) {
     flagSu = true;
+    var wordTemp = [...word];
     for (let i = 0; i < impossibleEndings.length; i++)
-        if (word[word.length-1].endsWith(impossibleEndings[i])) [flagSu,word] = addSuffix(word,suffixes);
-    if (flagSu) return word;
+        if (wordTemp[wordTemp.length-1].endsWith(impossibleEndings[i])) [flagSu,wordTemp] = addSuffix(wordTemp,suffixes);
+    if (flagSu) return wordTemp;
     
     flag = true;
     while (flag) {
         flag = false;
         for (let i = 0; i < impossibleEndings.length; i++) {
-            if (word[word.length-1].endsWith(impossibleEndings[i])) {
+            if (wordTemp[wordTemp.length-1].endsWith(impossibleEndings[i])) {
                 flag = true;
-                word[word.length-1] = chance.weighted(syllables.list,syllables.weight);
+                wordTemp[wordTemp.length-1] = chance.weighted(syllables.list,syllables.weight);
             };
         };
     };
-    return word;
+    return wordTemp;
 };
 
 function isConsonant(letter) {
@@ -118,19 +141,20 @@ function isConsonant(letter) {
 
 function removeExtraConsonants(word, syllables) {
     flag = true;
+    var wordTemp = [...word];
     while (flag) {
         flag = false;
-        if (word.length > 2)
-            for (let i = 1; i < word.length-1; i++) {
-                if (isConsonant(word[i-1][word[i-1].length-1]) && isConsonant(word[i][0]) && isConsonant(word[i][1]) || isConsonant(word[i][word[i].length-1]) && isConsonant(word[i][word[i].length-2]) && isConsonant(word[i+1][0])) {
-                    word[i] = chance.weighted(syllables.list,syllables.weight);
+        if (wordTemp.length > 2)
+            for (let i = 1; i < wordTemp.length-1; i++) {
+                if (isConsonant(wordTemp[i-1][wordTemp[i-1].length-1]) && isConsonant(wordTemp[i][0]) && isConsonant(wordTemp[i][1]) || isConsonant(wordTemp[i][wordTemp[i].length-1]) && isConsonant(wordTemp[i][wordTemp[i].length-2]) && isConsonant(wordTemp[i+1][0])) {
+                    wordTemp[i] = chance.weighted(syllables.list,syllables.weight);
                     flag = true;
                 };
             }
-        else if (word.length == 2 && isConsonant(word[0][word[0].length-1]) && isConsonant(word[1][0]) && isConsonant(word[1][1]) || isConsonant(word[0][word[0].length-1]) && isConsonant(word[0][word[0].length-2]) && isConsonant(word[1][0])) {
-                word[chance.integer({min:0,max:1})] = chance.weighted(syllables.list,syllables.weight);
+        else if (wordTemp.length == 2 && isConsonant(wordTemp[0][wordTemp[0].length-1]) && isConsonant(wordTemp[1][0]) && isConsonant(wordTemp[1][1]) || isConsonant(wordTemp[0][wordTemp[0].length-1]) && isConsonant(wordTemp[0][wordTemp[0].length-2]) && isConsonant(wordTemp[1][0])) {
+                wordTemp[chance.integer({min:0,max:1})] = chance.weighted(syllables.list,syllables.weight);
                 flag = true;
         };
     };
-    return word;
+    return wordTemp;
 };
