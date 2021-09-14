@@ -116,7 +116,7 @@ function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefix
 };
 
 function removeImpossibleEnding(word, impossibleEndings, syllables, suffixes) {
-    flagSu = true;
+    var flagSu = true;
     var wordTemp = [...word];
     for (let i = 0; i < impossibleEndings.length; i++)
         if (wordTemp[wordTemp.length-1].endsWith(impossibleEndings[i])) [flagSu,wordTemp] = addSuffix(wordTemp,suffixes);
@@ -140,18 +140,18 @@ function isConsonant(letter) {
 };
 
 function removeExtraConsonants(word, syllables) {
-    flag = true;
+    var flag = true;
     var wordTemp = [...word];
     while (flag) {
         flag = false;
         if (wordTemp.length > 2)
             for (let i = 1; i < wordTemp.length-1; i++) {
-                if (isConsonant(wordTemp[i-1][wordTemp[i-1].length-1]) && isConsonant(wordTemp[i][0]) && isConsonant(wordTemp[i][1]) || isConsonant(wordTemp[i][wordTemp[i].length-1]) && isConsonant(wordTemp[i][wordTemp[i].length-2]) && isConsonant(wordTemp[i+1][0])) {
+                if ((isConsonant(wordTemp[i-1][wordTemp[i-1].length-1]) && isConsonant(wordTemp[i][0]) && isConsonant(wordTemp[i][1])) || (isConsonant(wordTemp[i][wordTemp[i].length-1]) && isConsonant(wordTemp[i][wordTemp[i].length-2]) && isConsonant(wordTemp[i+1][0]))) {
                     wordTemp[i] = chance.weighted(syllables.list,syllables.weight);
                     flag = true;
                 };
             }
-        else if (wordTemp.length == 2 && isConsonant(wordTemp[0][wordTemp[0].length-1]) && isConsonant(wordTemp[1][0]) && isConsonant(wordTemp[1][1]) || isConsonant(wordTemp[0][wordTemp[0].length-1]) && isConsonant(wordTemp[0][wordTemp[0].length-2]) && isConsonant(wordTemp[1][0])) {
+        else if ((wordTemp.length == 2 && isConsonant(wordTemp[0][wordTemp[0].length-1]) && isConsonant(wordTemp[1][0]) && isConsonant(wordTemp[1][1])) || (isConsonant(wordTemp[0][wordTemp[0].length-1]) && isConsonant(wordTemp[0][wordTemp[0].length-2]) && isConsonant(wordTemp[1][0]))) {
                 wordTemp[chance.integer({min:0,max:1})] = chance.weighted(syllables.list,syllables.weight);
                 flag = true;
         };
