@@ -21,11 +21,11 @@ function addGen(word, language) {
         if (!word.equals(wordTemp)) flagCount++;
         word = wordTemp;
     };
-    if (["pt","ru"].includes(language.code)) {
+    /*if (["pt","ru"].includes(language.code)) {
         wordTemp = removeExtraConsonants(word, language.syllables);
         if (!word.equals(wordTemp)) flagCount++;
         word = wordTemp;
-    };
+    };*/
     return [word,flagCount];
 }
 
