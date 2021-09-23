@@ -35,6 +35,10 @@ h5 {
     width: 100px;
 }
 
+#fixedlabel {
+    padding-left: 6px;
+}
+
 .genbuttons {
     display: block;
     text-align: center;
