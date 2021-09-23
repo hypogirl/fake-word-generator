@@ -62,6 +62,10 @@ h5 {
     padding-left: 10px;
 }
 
+ol > li::marker {
+    font-weight: bold;
+  }
+
 .unselectable {
     -moz-user-select: -moz-none;
     -khtml-user-select: none;
@@ -69,42 +73,3 @@ h5 {
     -ms-user-select: none;
     user-select: none;
  }
-
-/* Easy Grid */
-.eg-row{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:flex-start;
-    justify-content:space-between;
-    margin:0.5em 0;
-}
-.eg-row.no-marg{
-    margin:0;
-}
-.col-100,
-.col-75,
-.col-66,
-.col-50,
-.col-33,
-.col-25{
-    width:98%;   
-    margin:0 1%;
-}
-@media(min-width:768px){
-    .col-75{
-        width:73%;   
-    }
-    .col-66{
-        width:65%;   
-    }
-    .col-50{
-        width:48%;   
-    }
-    .col-33{
-        width:31%;   
-    }
-    .col-25{
-        width:23%;   
-    }
-}
-/* End Easy Grid */

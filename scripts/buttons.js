@@ -41,23 +41,16 @@ generateButton.onclick = (event) => {
         if (iAux == 1) {
             document.getElementById("clearButton").style.removeProperty("background-color");
             document.getElementById("clearButton").style.removeProperty("cursor");
-            const h = document.createElement("h3");
-            const title = document.createTextNode("Generated words");
-            h.appendChild(title);
+            document.getElementById("resultitle").style.removeProperty("display");
             const result = document.getElementById("result");
-            result.appendChild(h);
+            iAux = 0;
         }
 
         for (let i = 0; i < wordList.length; i++) {
-            const b = document.createElement("b");
-            b.classList.add("unselectable");
-            const num = document.createTextNode((iAux).toString() + ". ");
-            iAux++;
-            b.appendChild(num);
-            const node = document.createTextNode(wordList[i]);
-            const br = document.createElement("br");
-            const result = document.getElementById("result");
-            result.appendChild(b); result.appendChild(node); result.appendChild(br);
+            const li = document.createElement("li");
+            const word = document.createTextNode(wordList[i]);
+            const resultlist = document.getElementById("resultlist");
+            li.appendChild(word); resultlist.appendChild(li);
         };
     };
 };
@@ -67,5 +60,6 @@ clearButton.onclick = (event) => {
     iAux = 1;
     document.getElementById("clearButton").style.setProperty("background-color", "#7e7e7e", "important");
     document.getElementById("clearButton").style.setProperty("cursor", "default", "important");
-    document.getElementById("result").innerHTML = "";
+    document.getElementById("resultitle").style.setProperty("display","none");
+    document.getElementById("resultlist").innerHTML = null;
 }
