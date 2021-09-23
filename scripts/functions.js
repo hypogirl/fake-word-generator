@@ -56,16 +56,18 @@ function initWord(syllables,length) {
     return word;
 }
 
-function addPrefixSuffix(word, prefixes, suffixes) {
+function addPrefixSuffix(word, prefixes, suffixes, prefix, suffix) {
     if (word.length > 1) {
         if (chance.weighted([true,false],[prefixes.highestWeight,suffixes.highestWeight])) {
             var flagPre;
-            [flagPre,word] = addPrefix(word,prefixes);
+            if (prefix) flagPre = true; 
+            else [flagPre,word] = addPrefix(word,prefixes);
             if (flagPre && word.length > 2) addSuffix(word,suffixes);
         }
         else {
             var flagSu;
-            [flagSu,word] = addSuffix(word,suffixes);
+            if (suffix) flagSu = true;
+            else [flagSu,word] = addSuffix(word,suffixes);
             if (flagSu && word.length > 2) addPrefix(word,prefixes);
         };
     };
@@ -97,16 +99,16 @@ function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
 function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefixes) {
     var flagPre = true;
     var wordTemp = [...word];
-    for (let i = 0; i < impossibleBeginnings.length; i++)
-        if (wordTemp[0].startsWith(impossibleBeginnings[i]))
+    for (imp of impossibleBeginnings)
+        if (wordTemp[0].startsWith(imp))
             [flagPre,wordTemp] = addPrefix(wordTemp,prefixes);
     if (flagPre) return wordTemp;
     
     flag = true;
     while (flag) {
         flag = false;
-        for (let i = 0; i < impossibleBeginnings.length; i++) {
-            if (wordTemp[0].startsWith(impossibleBeginnings[i])) {
+        for (imp of impossibleBeginnings) {
+            if (wordTemp[0].startsWith(imp)) {
                 flag = true;
                 wordTemp[0] = chance.weighted(syllables.list,syllables.weight);
             };
@@ -118,15 +120,15 @@ function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefix
 function removeImpossibleEnding(word, impossibleEndings, syllables, suffixes) {
     var flagSu = true;
     var wordTemp = [...word];
-    for (let i = 0; i < impossibleEndings.length; i++)
-        if (wordTemp[wordTemp.length-1].endsWith(impossibleEndings[i])) [flagSu,wordTemp] = addSuffix(wordTemp,suffixes);
+    for (imp of impossibleEndings)
+        if (wordTemp[wordTemp.length-1].endsWith(imp)) [flagSu,wordTemp] = addSuffix(wordTemp,suffixes);
     if (flagSu) return wordTemp;
     
     flag = true;
     while (flag) {
         flag = false;
-        for (let i = 0; i < impossibleEndings.length; i++) {
-            if (wordTemp[wordTemp.length-1].endsWith(impossibleEndings[i])) {
+        for (imp of impossibleEndings) {
+            if (wordTemp[wordTemp.length-1].endsWith(imp)) {
                 flag = true;
                 wordTemp[wordTemp.length-1] = chance.weighted(syllables.list,syllables.weight);
             };

@@ -8,13 +8,13 @@ header {
 .genheader {
     background-color: #e1e1e1;
     position: sticky;
-    top: 0px;
+    top: 0;
     padding-bottom: 20px;
     box-shadow: 0px 5px 11px 0px #00000042;
 }
 
 .generateSection {
-    padding: 20;
+    padding: 20px;
     text-align: center;
 }
 
@@ -24,6 +24,7 @@ header {
 
 h5 {
     display: inline;
+    padding-right: 5px;
 }
 
 .box {
@@ -49,10 +50,10 @@ h5 {
     color: white;
     margin-left: 10px;
     margin-top: 10px;
-    padding-left: 15;
-    padding-right: 15;
-    padding-top: 5;
-    padding-bottom: 5;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     width: 200px;
 }
 
@@ -68,7 +69,7 @@ h5 {
 
 ol > li::marker {
     font-weight: bold;
-  }
+}
 
 .unselectable {
     -moz-user-select: -moz-none;
