@@ -21,25 +21,27 @@ function addGen(word, language) {
         if (!word.equals(wordTemp)) flagCount++;
         word = wordTemp;
     };
-    /*if (["pt","ru"].includes(language.code)) {
+    if (["pt","ru"].includes(language.code)) {
         wordTemp = removeExtraConsonants(word, language.syllables);
         if (!word.equals(wordTemp)) flagCount++;
         word = wordTemp;
-    };*/
+    };
     return [word,flagCount];
 }
 
 function generateWord(language) {
-    var word;
+    var word = [];
     var flagCount;
-    word = initWord(language.syllables, language.wordLength);
+    if (language.length) {
+        word = initWord(language.syllables, language.wordLength);
+        word = addPrefixSuffix(word,language.prefixes,language.suffixes,language.prefix,language.suffix);
+        [word,flagCount] = addGen(word, language);
+        while (flagCount > 0) {
+            [word,flagCount] = addGen(word, language);
+        }
+    }
     if (language.prefix) word.unshift(language.prefix);
     if (language.suffix) word.push(language.suffix);
-    word = addPrefixSuffix(word,language.prefixes,language.suffixes,language.prefix,language.suffix);
-    [word,flagCount] = addGen(word, language);
-    while (flagCount > 0) {
-        [word,flagCount] = addGen(word, language);
-    }
     return word.join('');
 };
 /*
