@@ -32,7 +32,7 @@ function addGen(word, language) {
 function generateWord(language) {
     var word = [];
     var flagCount;
-    if (language.length) {
+    if (language.wordLength) {
         word = initWord(language.syllables, language.wordLength);
         word = addPrefixSuffix(word,language.prefixes,language.suffixes,language.prefix,language.suffix);
         [word,flagCount] = addGen(word, language);
