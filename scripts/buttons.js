@@ -43,17 +43,20 @@ generateButton.onclick = (event) => {
         if (iAux == 1) {
             document.getElementById("clearButton").style.removeProperty("background-color");
             document.getElementById("clearButton").style.removeProperty("cursor");
-            document.getElementById("resultitle").style.removeProperty("display");
+            document.getElementById("resulttitle").style.removeProperty("display");
             const result = document.getElementById("result");
             iAux = 0;
-        }
-
-        for (let i = 0; i < wordList.length; i++) {
-            const li = document.createElement("li");
-            const word = document.createTextNode(wordList[i]);
-            const resultlist = document.getElementById("resultlist");
-            li.appendChild(word); resultlist.appendChild(li);
         };
+
+        for (word of wordList) {
+            const li = document.createElement("li");
+            li.classList.add("word");
+            const wordli = document.createTextNode(word);
+            const resultlist = document.getElementById("resultlist");
+            li.appendChild(wordli); resultlist.appendChild(li);
+        };
+
+        setTimeout(() => {for (word of resultlist.children) word.style.opacity = 1; document.getElementById("resulttitle").style.opacity = 1;}, 0);
     };
 };
 
@@ -63,7 +66,8 @@ clearButton.onclick = (event) => {
     iAux = 1;
     document.getElementById("clearButton").style.setProperty("background-color", "#7e7e7e", "important");
     document.getElementById("clearButton").style.setProperty("cursor", "default", "important");
-    document.getElementById("resultitle").style.setProperty("display","none");
+    document.getElementById("resulttitle").style.display = "none";
+    document.getElementById("resulttitle").style.opacity = 0;
     document.getElementById("resultlist").innerHTML = null;
 }
 
@@ -131,3 +135,9 @@ languageSel.onchange = (event) => {
     }
     secondarygen.appendChild(parameters);
 }
+
+const genheader = document.getElementById("genheader");
+window.onscroll = function (e) {
+    if (genheader.style.opacity == 1 && window.scrollY > 300) genheader.style.opacity = 0;
+    else if (genheader.style.opacity == 0 && window.scrollY < 300) genheader.style.opacity = 1;
+};
