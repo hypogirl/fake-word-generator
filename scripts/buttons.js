@@ -79,43 +79,55 @@ languageSel.onchange = (event) => {
     else if (langValue == "fr") language = french;
     else return;
 
+
+    const secondarygen = document.getElementById("secondarygen");
+
     const prefixestitle = document.createElement("h5");
     prefixestitle.innerHTML = "Prefix";
+
     const prefixes = document.createElement("select");
     prefixes.id = "prefix";
+
     const parameterp = document.createElement("span");
     parameterp.classList.add("parameter");
     parameterp.appendChild(prefixestitle);
     parameterp.appendChild(prefixes);
+
     const optionp = document.createElement("option");
     optionp.innerHTML = "None";
     optionp.value = null;
     prefixes.append(optionp);
+
     for (prefix of language.prefixes.list) {
         const option = document.createElement("option");
         option.innerHTML = prefix.concat("-");
         option.value = prefix;
         prefixes.append(option);
     }
-    document.getElementById("secondarygen").appendChild(parameterp);
+    secondarygen.appendChild(parameterp);
+
 
     const suffixestitle = document.createElement("h5");
     suffixestitle.innerHTML = "Suffix";
+
     const suffixes = document.createElement("select");
     suffixes.id = "suffix";
+
     const parameters = document.createElement("span");
     parameters.classList.add("parameter");
     parameters.appendChild(suffixestitle);
     parameters.appendChild(suffixes);
+
     const options = document.createElement("option");
     options.innerHTML = "None";
     options.value = null;
     suffixes.append(options);
+
     for (suffix of language.suffixes.list) {
         const option = document.createElement("option");
         option.innerHTML = "-".concat(suffix);
         option.value = suffix;
         suffixes.append(option);
     }
-    document.getElementById("secondarygen").appendChild(parameters);
+    secondarygen.appendChild(parameters);
 }

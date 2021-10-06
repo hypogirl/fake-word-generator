@@ -10,8 +10,8 @@
             <h1>Fake Word Generator</h1>
         </header>
         <nav class="genheader">
-            <section class="generateSection">
-                <div style="padding-bottom: 20px;">
+            <div class="generateDiv">
+                <section class="generateSection">
                     <span class="parameter">
                         <h5>Language</h5>
                         <select id="languageSel">
@@ -32,9 +32,9 @@
                         <h5>Number of words to generate</h5>
                         <input type="number" class="numberinput" id="wordsInput" name="wordsInput" min="1">
                     </span>
-                </div>
-                <div id="secondarygen"></div>
-            </section>
+                </section>
+                <section class="generateSection2" id="secondarygen"></section>
+            </div>
             <section class="genbuttons">
                 <div class="btn" id="generateButton">Generate</div>
                 <div class="btn" id="clearButton" style="background-color: #7e7e7e!important; cursor: default!important">Clear generated words</div>
