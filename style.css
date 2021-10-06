@@ -81,6 +81,7 @@ h5 {
 #checkboxLength {
     padding-top: 10px;
     padding-left: 10px;
+    display: block;
 }
 
 ol > li::marker {
@@ -93,9 +94,16 @@ ol > li::marker {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
- }
+}
 
- @media (min-width: 1200px) {
+@media (min-width: 465px) {
+    #checkboxLength {
+        display: inline;
+    }
+}
+
+
+@media (min-width: 1200px) {
     .generateSection {
         display: flex;
         flex-direction: row;
