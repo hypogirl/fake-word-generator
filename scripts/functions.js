@@ -52,7 +52,7 @@ function addSuffix(word,suffixes) {
 
 function initWord(syllables,length) {
     var word = [];
-    while (word.length*2.5 < length) word = word.push(chance.weighted(syllables.list,syllables.weight));
+    while (word.length*2.5 < length) word.push(chance.weighted(syllables.list,syllables.weight));
     return word;
 }
 
@@ -77,7 +77,7 @@ function addPrefixSuffix(word, prefixes, suffixes, prefix, suffix) {
 function addEndingLetter(word,endingLetters) {
     var wordTemp = [...word];
     if (!endingLetters.includes(wordTemp[wordTemp.length-1][wordTemp[wordTemp.length-1].length-1]))
-        wordTemp = wordTemp.push(endingLetters[chance.integer({ min: 0, max: endingLetters.length-1})]);
+        wordTemp.push(endingLetters[chance.integer({ min: 0, max: endingLetters.length-1})]);
     return wordTemp;
 }
 
