@@ -13,24 +13,33 @@
             <div class="generateDiv">
                 <section class="generateSection">
                     <span class="parameter">
-                        <h5>Language</h5>
-                        <select id="languageSel">
-                            <!--option value="en">English</option-->
-                            <!--option value="es">Español</option-->
-                            <!--option value="fr">Français</option-->
-                            <option>Select a language</option>
-                            <option value="pt">Português</option>
-                            <option value="ru">Русский</option>
-                        </select>
+                        <label for="languageSel"><h5>Language</h5></label>
+                        <div>
+                            <select id="languageSel">
+                                <!--option value="en">English</option-->
+                                <!--option value="es">Español</option-->
+                                <!--option value="fr">Français</option-->
+                                <option value="null">Select a language</option>
+                                <option value="pt">Português</option>
+                                <option value="ru">Русский</option>
+                            </select>
+                            <div class="invalid" id="invalid_language" style="display: none;">Invalid option.</div>
+                        </div>
                     </span>
                     <span class="parameter">
-                        <h5>Estimated word length</h5>
-                        <input type="number" class="numberinput" id="lengthInput" name="lengthInput" min="2" placeholder="7" value="7">
+                        <label for="lengthInput"><h5>Estimated word length</h5></label>
+                        <div>
+                            <input type="number" class="numberinput" id="lengthInput" name="lengthInput" min="2" placeholder="7" value="7">
+                            <div class="invalid" id="invalid_length" style="display: none;">Invalid option.</div>
+                        </div>
                         <span id="checkboxLength"><input type="checkbox" id="fixedLength"><label for="fixedLength" id="fixedlabel">Fixed length</label></span>
                     </span>
                     <span class="parameter">
-                        <h5>Number of words to generate</h5>
-                        <input type="number" class="numberinput" id="wordsInput" name="wordsInput" min="1" placeholder="10" value="10">
+                        <label for="wordsInput"><h5>Number of words to generate</h5></label>
+                        <div>
+                            <input type="number" class="numberinput" id="wordsInput" name="wordsInput" min="1" placeholder="10" value="10">
+                            <div class="invalid" id="invalid_words" style="display: none;">Invalid option.</div>
+                        </div>
                     </span>
                 </section>
                 <section class="generateSection2" id="secondarygen"></section>

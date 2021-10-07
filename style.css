@@ -44,11 +44,17 @@ header {
 
 .parameter {
     padding: 10px;
+    display: flex;
+    align-items: flex-start;
 }
 
 h5 {
     display: inline;
-    padding-right: 5px;
+    padding-right: 10px;
+}
+
+.invalid {
+    color: #d60000;
 }
 
 .box {
@@ -90,7 +96,6 @@ h5 {
 }
 
 #checkboxLength {
-    padding-top: 10px;
     padding-left: 10px;
     display: block;
 }
@@ -117,5 +122,6 @@ ol > li::marker {
     .generateSection {
         display: flex;
         flex-direction: row;
+        align-items: flex-start;
     }
 }

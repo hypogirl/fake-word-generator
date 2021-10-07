@@ -3,13 +3,46 @@ const generateButton = document.querySelector("#generateButton");
 generateButton.onclick = (event) => {
     const languageSel = document.getElementById("languageSel");
     var langValue = languageSel.options[languageSel.selectedIndex].value;
+    if (langValue != "null") {
+        languageSel.classList.remove("border-danger");
+        const invalid_language = document.getElementById("invalid_language");
+        invalid_language.style.display = "none";
+    }
+    else {
+        languageSel.classList.add("border-danger");
+        const invalid_language = document.getElementById("invalid_language");
+        invalid_language.style.display = "block";
+    }
     
     var length;
     var fixedLength;
-    if (document.getElementById("lengthInput").value > 0) {length = document.getElementById("lengthInput").value; fixedLength = document.querySelector('#fixedLength').checked;};
+    if (document.getElementById("lengthInput").value > 0) {
+        length = document.getElementById("lengthInput").value;
+        document.getElementById("lengthInput").classList.remove("border-danger");
+        fixedLength = document.querySelector('#fixedLength').checked;
+        const invalid_length = document.getElementById("invalid_length");
+        invalid_length.style.display = "none";
+    }
+    else {
+        const length_elem = document.getElementById("lengthInput");
+        length_elem.classList.add("border-danger");
+        const invalid_length = document.getElementById("invalid_length");
+        invalid_length.style.display = "block";
+    }
     
     var words;
-    if (document.getElementById("wordsInput").value > 0) words = document.getElementById("wordsInput").value;
+    if (document.getElementById("wordsInput").value > 0) {
+        words = document.getElementById("wordsInput").value;
+        document.getElementById("wordsInput").classList.remove("border-danger");
+        const invalid_words = document.getElementById("invalid_words");
+        invalid_words.style.display = "none";
+    }
+    else {
+        const words_elem = document.getElementById("wordsInput");
+        words_elem.classList.add("border-danger");
+        const invalid_words = document.getElementById("invalid_words");
+        invalid_words.style.display = "block";
+    }
 
 
     if (langValue && length && words) {
@@ -89,12 +122,16 @@ languageSel.onchange = (event) => {
     const prefixestitle = document.createElement("h5");
     prefixestitle.innerHTML = "Prefix";
 
+    const prefixlabel = document.createElement("label");
+    prefixlabel.setAttribute("for","prefix");
+    prefixlabel.appendChild(prefixestitle);
+
     const prefixes = document.createElement("select");
     prefixes.id = "prefix";
 
     const parameterp = document.createElement("span");
     parameterp.classList.add("parameter");
-    parameterp.appendChild(prefixestitle);
+    parameterp.appendChild(prefixlabel);
     parameterp.appendChild(prefixes);
 
     const optionp = document.createElement("option");
@@ -114,12 +151,16 @@ languageSel.onchange = (event) => {
     const suffixestitle = document.createElement("h5");
     suffixestitle.innerHTML = "Suffix";
 
+    const suffixlabel = document.createElement("label");
+    suffixlabel.setAttribute("for","suffix");
+    suffixlabel.appendChild(suffixestitle);
+
     const suffixes = document.createElement("select");
     suffixes.id = "suffix";
 
     const parameters = document.createElement("span");
     parameters.classList.add("parameter");
-    parameters.appendChild(suffixestitle);
+    parameters.appendChild(suffixlabel);
     parameters.appendChild(suffixes);
 
     const options = document.createElement("option");
