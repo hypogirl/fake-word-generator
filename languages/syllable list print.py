@@ -29,6 +29,6 @@ for word in language:
         syllable += letter
         lastletter = letter
 
-syllable_dictionary_sorted = dict(sorted(syllable_dictionary.items(), key=lambda item: item[1]))
+syllable_dictionary_sorted = dict(sorted(syllable_dictionary.items(), key=lambda item: item[1], reverse= True))
 
 print(dict(itertools.islice(syllable_dictionary_sorted.items(), 100)))
