@@ -1,8 +1,5 @@
 # Sources for the language analysis:
 
-### Syllable Frenquencies
-https://www.sttmedia.com/syllablefrequencies
-
 ### Russian
 https://github.com/hingston/russian/blob/master/100000-russian-words.txt
 
