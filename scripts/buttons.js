@@ -1,9 +1,9 @@
-var iAux = 1;
+let iAux = 1;
 const generateButton = document.querySelector("#generateButton");
 generateButton.onclick = (event) => {
     const languageSel = document.getElementById("languageSel");
-    var langValue = languageSel.options[languageSel.selectedIndex].value;
-    if (langValue != "null") {
+    let langValue = languageSel.options[languageSel.selectedIndex].value;
+    if (langValue) {
         languageSel.classList.remove("border-danger");
         const invalid_language = document.getElementById("invalid_language");
         invalid_language.style.display = "none";
@@ -14,8 +14,8 @@ generateButton.onclick = (event) => {
         invalid_language.style.display = "block";
     }
     
-    var length;
-    var fixedLength;
+    let length;
+    let fixedLength;
     if (document.getElementById("lengthInput").value > 0) {
         length = document.getElementById("lengthInput").value;
         document.getElementById("lengthInput").classList.remove("border-danger");
@@ -30,7 +30,7 @@ generateButton.onclick = (event) => {
         invalid_length.style.display = "block";
     }
     
-    var words;
+    let words;
     if (document.getElementById("wordsInput").value > 0) {
         words = document.getElementById("wordsInput").value;
         document.getElementById("wordsInput").classList.remove("border-danger");
@@ -46,7 +46,7 @@ generateButton.onclick = (event) => {
 
 
     if (langValue && length && words) {
-        var language
+        let language
         if (langValue == "ru") language = russian;
         else if (langValue == "pt") language = portuguese;
         else if (langValue == "en") language = english;
@@ -54,15 +54,15 @@ generateButton.onclick = (event) => {
         else if (langValue == "fr") language = french;
         else return;
 
-        var prefixlength, suffixlength
-        if (document.getElementById("prefix")) {language.prefix = document.getElementById("prefix").value; if (language.prefix == "null") {language.prefix = null; prefixlength = 0;} else prefixlength = language.prefix.length}
-        if (document.getElementById("suffix")) {language.suffix = document.getElementById("suffix").value; if (language.suffix == "null") {language.suffix = null; suffixlength = 0;} else suffixlength = language.suffix.length}
+        let prefixLength, suffixLength
+        if (document.getElementById("prefix")) {language.prefix = document.getElementById("prefix").value; if (language.prefix == "0") language.prefixLength = 0; else language.prefixLength = language.prefix.length}
+        if (document.getElementById("suffix")) {language.suffix = document.getElementById("suffix").value; if (language.suffix == "0") language.suffixLength = 0; else language.suffixLength = language.suffix.length}
 
-        language.wordLength = length - prefixlength - suffixlength;
-        var wordList = [];
+        language.wordLength = length - language.prefixLength - language.suffixLength;
+        let wordList = [];01
         if (fixedLength) {
-            var wordCount = 0;
-            var word;
+            let wordCount = 0;
+            let word;
             while (wordCount < words) {
                 word = language.generateWord();
                 if (word.length == length) {
@@ -108,7 +108,7 @@ clearButton.onclick = (event) => {
 const languageSel = document.getElementById("languageSel");
 languageSel.onchange = (event) => {
     document.getElementById("secondarygen").innerHTML = null;
-    var langValue = languageSel.options[languageSel.selectedIndex].value;
+    let langValue = languageSel.options[languageSel.selectedIndex].value;
     if (langValue == "ru") language = russian;
     else if (langValue == "pt") language = portuguese;
     else if (langValue == "en") language = english;
@@ -136,7 +136,7 @@ languageSel.onchange = (event) => {
 
     const optionp = document.createElement("option");
     optionp.innerHTML = "None";
-    optionp.value = null;
+    optionp.value = 0;
     prefixes.append(optionp);
 
     for (prefix of language.prefixes.list) {
@@ -165,7 +165,7 @@ languageSel.onchange = (event) => {
 
     const options = document.createElement("option");
     options.innerHTML = "None";
-    options.value = null;
+    options.value = 0;
     suffixes.append(options);
 
     for (suffix of language.suffixes.list) {

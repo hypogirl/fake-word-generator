@@ -5,7 +5,7 @@ Array.prototype.equals = function (array) {
     if (this.length != array.length)
         return false;
 
-    for (var i = 0, l=this.length; i < l; i++) {
+    for (let i = 0, l=this.length; i < l; i++) {
         if (this[i] instanceof Array && array[i] instanceof Array) {
             if (!this[i].equals(array[i]))
                 return false;       
@@ -18,7 +18,7 @@ Array.prototype.equals = function (array) {
 }
 
 function addPrefix(word,prefixes) {
-    var flagPre = false;
+    let flagPre = false;
     if (chance.weighted([true,false],[prefixes.highestWeight,1-prefixes.highestWeight])) {
         const pre = chance.weighted(prefixes.list,prefixes.weight);
         if (pre.length > 3 && word.length > 2) {
@@ -34,7 +34,7 @@ function addPrefix(word,prefixes) {
     return [flagPre,word];
 }
 function addSuffix(word,suffixes) {
-    var flagSu = false;
+    let flagSu = false;
     if (chance.weighted([true,false],[suffixes.highestWeight,1-suffixes.highestWeight])) {
         const su = chance.weighted(suffixes.list,suffixes.weight);
         if (su.length > 3 && word.length > 2) {
@@ -51,7 +51,7 @@ function addSuffix(word,suffixes) {
 }
 
 function initWord(syllables,length) {
-    var word = [];
+    let word = [];
     while (word.length*2.5 < length) word.push(chance.weighted(syllables.list,syllables.weight));
     return word;
 }
@@ -59,13 +59,13 @@ function initWord(syllables,length) {
 function addPrefixSuffix(word, prefixes, suffixes, prefix, suffix) {
     if (word.length > 1) {
         if (chance.weighted([true,false],[prefixes.highestWeight,suffixes.highestWeight])) {
-            var flagPre;
+            let flagPre;
             if (prefix) flagPre = true; 
             else [flagPre,word] = addPrefix(word,prefixes);
             if (flagPre && word.length > 2) addSuffix(word,suffixes);
         }
         else {
-            var flagSu;
+            let flagSu;
             if (suffix) flagSu = true;
             else [flagSu,word] = addSuffix(word,suffixes);
             if (flagSu && word.length > 2) addPrefix(word,prefixes);
@@ -75,15 +75,15 @@ function addPrefixSuffix(word, prefixes, suffixes, prefix, suffix) {
 }
 
 function addEndingLetter(word,endingLetters) {
-    var wordTemp = [...word];
+    let wordTemp = [...word];
     if (!endingLetters.includes(wordTemp[wordTemp.length-1][wordTemp[wordTemp.length-1].length-1]))
         wordTemp.push(endingLetters[chance.integer({ min: 0, max: endingLetters.length-1})]);
     return wordTemp;
 }
 
 function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
-    var flag = true;
-    var wordTemp = [...word];
+    let flag = true;
+    let wordTemp = [...word];
     while (flag) {
         flag = false
         for (let i = 0; i < wordTemp.length-1; i++) {
@@ -97,8 +97,8 @@ function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
 }
 
 function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefixes) {
-    var flagPre = true;
-    var wordTemp = [...word];
+    let flagPre = true;
+    let wordTemp = [...word];
     for (imp of impossibleBeginnings)
         if (wordTemp[0].startsWith(imp))
             [flagPre,wordTemp] = addPrefix(wordTemp,prefixes);
@@ -118,8 +118,8 @@ function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefix
 };
 
 function removeImpossibleEnding(word, impossibleEndings, syllables, suffixes) {
-    var flagSu = true;
-    var wordTemp = [...word];
+    let flagSu = true;
+    let wordTemp = [...word];
     for (imp of impossibleEndings)
         if (wordTemp[wordTemp.length-1].endsWith(imp)) [flagSu,wordTemp] = addSuffix(wordTemp,suffixes);
     if (flagSu) return wordTemp;
@@ -142,8 +142,8 @@ function isConsonant(letter) {
 };
 
 function removeExtraConsonants(word, syllables) {
-    var flag = true;
-    var wordTemp = [...word];
+    let flag = true;
+    let wordTemp = [...word];
     while (flag) {
         flag = false;
         if (wordTemp.length > 2)

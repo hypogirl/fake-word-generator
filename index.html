@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <title>Fake Word Generator</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style/bootstrap.min.css">
+        <link rel="stylesheet" href="style/style.css">
     </head>
     <body style="background:#cacaca;">
         <header>
@@ -19,7 +19,7 @@
                                 <!--option value="en">English</option-->
                                 <!--option value="es">Español</option-->
                                 <!--option value="fr">Français</option-->
-                                <option value="null">Select a language</option>
+                                <option value="0">Select a language</option>
                                 <option value="pt">Português</option>
                                 <option value="ru">Русский</option>
                             </select>
@@ -50,7 +50,7 @@
             </section>  
         </nav>
         <div class="box" id="result"><h3 id="resulttitle" style="display: none;">Generated words</h3><ol id="resultlist"></ol></div>
-        <script src="https://chancejs.com/chance.js"></script>
+        <script src="scripts/chance.js"></script>
         <script src="scripts/functions.js"></script>
         <script src="scripts/generateword.js"></script>
         <script src="scripts/languages.js"></script>

@@ -1,6 +1,6 @@
 function addGen(word, language) {
-    var flagCount = 0;
-    var wordTemp;
+    let flagCount = 0;
+    let wordTemp;
     if (["pt"].includes(language.code)) {
         wordTemp = addEndingLetter(word,language.endingLetters);
         if (!word.equals(wordTemp)) flagCount++;
@@ -30,8 +30,8 @@ function addGen(word, language) {
 }
 
 function generateWord(language) {
-    var word = [];
-    var flagCount;
+    let word = [];
+    let flagCount;
     if (language.wordLength) {
         word = initWord(language.syllables, language.wordLength);
         word = addPrefixSuffix(word,language.prefixes,language.suffixes,language.prefix,language.suffix);
@@ -40,10 +40,11 @@ function generateWord(language) {
             [word,flagCount] = addGen(word, language);
         }
     }
-    if (language.prefix) word.unshift(language.prefix);
-    if (language.suffix) word.push(language.suffix);
+    if (language.prefixlength) word.unshift(language.prefix);
+    if (language.suffixlength) word.push(language.suffix);
     return word.join('');
 };
+
 /*
 function generateWordDefault(language) {
     word = initWord(language.syllables, language.wordLength);

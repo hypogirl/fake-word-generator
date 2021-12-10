@@ -1,4 +1,4 @@
-var russian = {
+let russian = {
     code: "ru",
     syllables: {
         list: ['то', 'ст', 'но', 'на', 'ко', 'ни', 'не', 'ен', 'по', 'ра', 'ли', 'он', 'ер', 'ро', 'ол', 'го', 'ал', 'от', 'ов', 'ть', 'ре', 'во', 'пр', 'та', 'ка', 'бы', 'ел', 'ет', 'ос', 'ан', 'ла', 'ор', 'ве', 'де', 'ль', 'ло', 'те', 'был', 'что', 'ени', 'ост', 'оль', 'ать', 'его', 'ств', 'про', 'вер', 'ого', 'это', 'при', 'ста', 'тор', 'ест', 'ото', 'енн', 'ова', 'льн', 'оро', 'как'],
@@ -18,7 +18,7 @@ var russian = {
 };
 
 
-var portuguese = {
+let portuguese = {
     code: "pt",
     syllables: {
         list: ['ra', 'en', 'de', 'ar', 'es', 'er', 'te', 'do', 'os', 'as', 'co', 'qua', 'que', 'qui', 'quo', 'se', 're', 'ta', 'ma', 'to', 'me', 'el', 'pa', 'or', 'em', 'ue', 'da', 'ad', 'an', 'in', 'po', 'um', 'al', 've', 'am', 'ri', 'om', 'sa', 'le', 'ca', 'ti', 'ent', 'que', 'par', 'ara', 'men', 'com', 'est', 'ado', 'ele', 'uma', 'era', 'voc', 'ant', 'con', 'ver', 'ria', 'seu', 'inha', 'ame', 'inho', 'por', 'per', 'mas', 'ela', 'tos', 'ada', 'dos', 'res', 'eri', 'and', 'qua', 'ito', 'ida'],
@@ -42,7 +42,7 @@ var portuguese = {
 };
 
 
-var english = {
+let english = {
     code: "en",
     syllables: {
         list: ['th', 'he', 'an', 'er', 'in', 're', 'nd', 'ou', 'en', 'on', 'ed', 'to', 'it', 'at', 'ha', 've', 'as', 'or', 'hi', 'ar', 'te', 'es', 'ng', 'is', 'st', 'le', 'al', 'ti', 'se', 'ea', 'wa', 'me', 'nt', 'ne', 'the', 'and', 'ing', 'her', 'you', 'ver', 'was', 'hat', 'for', 'not', 'thi', 'tha', 'his', 'ent', 'ion', 'ith', 'ere', 'wit', 'all', 'eve', 'oul', 'uld', 'tio', 'ter', 'had', 'hen', 'era', 'are', 'hin', 'our', 'sho', 'ted', 'ome', 'but'],
@@ -62,7 +62,7 @@ var english = {
 };
 
 
-var spanish = {
+let spanish = {
     code: "es",
     syllables: {
         list: ['en', 'de', 'er', 'es', 'ue', 'la', 'ra', 'os', 'nt', 'te', 'ar', 'qu', 'el', 'ta', 'do', 'co', 're', 'as', 'on', 'an', 'to', 'lo', 'st', 'un', 'or', 'ad', 'ie', 'se', 'ci', 'al', 'pa', 'na', 'ro', 'no', 'me', 'in', 'que', 'ent', 'nte', 'con', 'est', 'ado', 'par', 'los', 'era', 'ien', 'men', 'per', 'sta', 'ara', 'por', 'una', 'ión', 'ant', 'tra', 'ero', 'nto', 'ció', 'aci', 'las', 'com', 'ste', 'res', 'ier', 'ten', 'dos', 'des', 'ver', 'ido', 'ada'],
@@ -81,7 +81,7 @@ var spanish = {
     generateWord: function () {return generateWord(this);}
 }
 
-var french = {
+let french = {
     code: "fr",
     syllables: {
         list: ['le', 'en', 'es', 'de', 're', 'ai', 'ou', 'nt', 'on', 'er', 'ur', 'an', 'it', 'te', 'et', 'me', 'la', 'is', 'qu', 'se', 'il', 'ue', 'us', 'eu', 'co', 'ra', 'ne', 'in', 've', 'pa', 'ma', 'au', 'ar', 'ns', 'ch', 'ie', 'ti', 'tr', 'ce', 'em', 'un', 'ent', 'que', 'ait', 'les', 'lle', 'our', 'men', 'ais', 'est', 'tre', 'mai', 'ous', 'par', 'ant', 'ion', 'eme', 'tai', 'ans', 'pas', 'ell', 'vou', 'tou', 'pou', 'eur', 'ont', 'res', 'dan', 'une', 'éta', 'ien', 'sur', 'son', 'mme', 'tio', 'des', 'ire', 'com', 'omm', 'ver', 'con', 'che', 'ave', 'ain', 'ure', 'out', 'plu', 'cha', 'eux', 'ava', 'ouv', 'nte', 'lus', 'fai', 'ati'],
