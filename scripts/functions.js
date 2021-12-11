@@ -19,8 +19,8 @@ Array.prototype.equals = function (array) {
 
 function addPrefix(word,prefixes) {
     let flagPre = false;
-    if (chance.weighted([true,false],[prefixes.highestWeight,1-prefixes.highestWeight])) {
-        const pre = chance.weighted(prefixes.list,prefixes.weight);
+    if (weightedRandom([true,false],[prefixes.highestWeight,1-prefixes.highestWeight])) {
+        const pre = weightedRandom(prefixes.list,prefixes.weight);
         if (pre.length > 3 && word.length > 2) {
             word.shift();
             word[0] = pre;
@@ -35,8 +35,8 @@ function addPrefix(word,prefixes) {
 }
 function addSuffix(word,suffixes) {
     let flagSu = false;
-    if (chance.weighted([true,false],[suffixes.highestWeight,1-suffixes.highestWeight])) {
-        const su = chance.weighted(suffixes.list,suffixes.weight);
+    if (weightedRandom([true,false],[suffixes.highestWeight,1-suffixes.highestWeight])) {
+        const su = weightedRandom(suffixes.list,suffixes.weight);
         if (su.length > 3 && word.length > 2) {
             word.pop();
             word[word.length-1] = su;
@@ -52,13 +52,13 @@ function addSuffix(word,suffixes) {
 
 function initWord(syllables,length) {
     let word = [];
-    while (word.length*2.5 < length) word.push(chance.weighted(syllables.list,syllables.weight));
+    while (word.length*2.5 < length) word.push(weightedRandom(syllables.list,syllables.weight));
     return word;
 }
 
 function addPrefixSuffix(word, prefixes, suffixes, prefix, suffix) {
     if (word.length > 1) {
-        if (chance.weighted([true,false],[prefixes.highestWeight,suffixes.highestWeight])) {
+        if (weightedRandom([true,false],[prefixes.highestWeight,suffixes.highestWeight])) {
             let flagPre;
             if (prefix) flagPre = true; 
             else [flagPre,word] = addPrefix(word,prefixes);
@@ -77,7 +77,7 @@ function addPrefixSuffix(word, prefixes, suffixes, prefix, suffix) {
 function addEndingLetter(word,endingLetters) {
     let wordTemp = [...word];
     if (!endingLetters.includes(wordTemp[wordTemp.length-1][wordTemp[wordTemp.length-1].length-1]))
-        wordTemp.push(endingLetters[chance.integer({ min: 0, max: endingLetters.length-1})]);
+        wordTemp.push(endingLetters[randomInteger(0, endingLetters.length-1)]);
     return wordTemp;
 }
 
@@ -89,7 +89,7 @@ function removeImpossibleSyllable(word,impossibleSyllables,syllables) {
         for (let i = 0; i < wordTemp.length-1; i++) {
             if (impossibleSyllables.includes(wordTemp[i][wordTemp[i].length-1]+wordTemp[i+1][0])) {
                 flag = true;
-                wordTemp[i] = chance.weighted(syllables.list,syllables.weight);
+                wordTemp[i] = weightedRandom(syllables.list,syllables.weight);
             };
         };
     };
@@ -110,7 +110,7 @@ function removeImpossibleBeginning(word, impossibleBeginnings, syllables, prefix
         for (imp of impossibleBeginnings) {
             if (wordTemp[0].startsWith(imp)) {
                 flag = true;
-                wordTemp[0] = chance.weighted(syllables.list,syllables.weight);
+                wordTemp[0] = weightedRandom(syllables.list,syllables.weight);
             };
         };
     };
@@ -130,7 +130,7 @@ function removeImpossibleEnding(word, impossibleEndings, syllables, suffixes) {
         for (imp of impossibleEndings) {
             if (wordTemp[wordTemp.length-1].endsWith(imp)) {
                 flag = true;
-                wordTemp[wordTemp.length-1] = chance.weighted(syllables.list,syllables.weight);
+                wordTemp[wordTemp.length-1] = weightedRandom(syllables.list,syllables.weight);
             };
         };
     };
@@ -149,12 +149,12 @@ function removeExtraConsonants(word, syllables) {
         if (wordTemp.length > 2)
             for (let i = 1; i < wordTemp.length-1; i++) {
                 if ((isConsonant(wordTemp[i-1][wordTemp[i-1].length-1]) && isConsonant(wordTemp[i][0]) && isConsonant(wordTemp[i][1])) || (isConsonant(wordTemp[i][wordTemp[i].length-1]) && isConsonant(wordTemp[i][wordTemp[i].length-2]) && isConsonant(wordTemp[i+1][0]))) {
-                    wordTemp[i] = chance.weighted(syllables.list,syllables.weight);
+                    wordTemp[i] = weightedRandom(syllables.list,syllables.weight);
                     flag = true;
                 };
             }
         else if ((wordTemp.length == 2 && isConsonant(wordTemp[0][wordTemp[0].length-1]) && isConsonant(wordTemp[1][0]) && isConsonant(wordTemp[1][1])) || (isConsonant(wordTemp[0][wordTemp[0].length-1]) && isConsonant(wordTemp[0][wordTemp[0].length-2]) && isConsonant(wordTemp[1][0]))) {
-                wordTemp[chance.integer({min:0,max:1})] = chance.weighted(syllables.list,syllables.weight);
+                wordTemp[randomInteger(0,1)] = weightedRandom(syllables.list,syllables.weight);
                 flag = true;
         };
     };
