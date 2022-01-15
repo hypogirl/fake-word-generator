@@ -1,7 +1,7 @@
 //  Function adapted from Chance.js 1.0.16 http://chancejs.com (c) 2013 Victor Quinn
 function weightedRandom(arr, weights) {
     if (arr.length !== weights.length) {
-        throw new RangeError("Chance: Length of array and weights must match");
+        throw new RangeError("Length of array and weights must match");
     }
 
     // scan weights array and sum valid entries
@@ -10,7 +10,7 @@ function weightedRandom(arr, weights) {
     for (var weightIndex = 0; weightIndex < weights.length; ++weightIndex) {
         val = weights[weightIndex];
         if (isNaN(val)) {
-            throw new RangeError("Chance: All weights must be numbers");
+            throw new RangeError("All weights must be numbers");
         }
 
         if (val > 0) {
@@ -19,7 +19,7 @@ function weightedRandom(arr, weights) {
     }
 
     if (sum === 0) {
-        throw new RangeError("Chance: No valid entries in array weights");
+        throw new RangeError("No valid entries in array weights");
     }
 
     // select a value within range
