@@ -6,9 +6,24 @@
         <link rel="stylesheet" href="style/style.css">
     </head>
     <body style="background:#cacaca;">
-        <header>
-            <h1>Fake Word Generator</h1>
-        </header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Fake Word Generator</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Statistics</a>
+                        </li>
+                  </ul>
+                </div>
+              </div>
+        </nav>
         <nav id="genheader" style="opacity: 1;">
             <div class="generateDiv">
                 <section class="generateSection">
@@ -45,7 +60,7 @@
                 <section class="generateSection2" id="secondarygen"></section>
             </div>
             <section class="genbuttons">
-                <div class="btn" id="generateButton">Generate</div>
+                <div class="btn bg-dark" id="generateButton">Generate</div>
                 <div class="btn" id="clearButton" style="background-color: #7e7e7e!important; cursor: default!important">Clear generated words</div>
             </section>  
         </nav>
